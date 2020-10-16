@@ -9,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
-        <title>SB Admin 2 - Dashboard</title>
+        <?php echo isset($titulo) ? '<title> Sistema natação | ' . $titulo . '</title>' : ' <title>Sistema natação</title>' ?>
 
         <!-- Custom fonts for this template-->
 
@@ -18,7 +18,11 @@
 
         <!-- Custom styles for this template-->
         <link href="<?php echo base_url('public/css/sb-admin-2.min.css'); ?>" rel="stylesheet">
-
+        <?php if (isset($styles)) : ?>
+            <?php foreach ($styles as $style) : ?>
+                <link href="<?php echo base_url('public/' . $style); ?>" rel="stylesheet">
+            <?php endforeach; ?>
+        <?php endif; ?>
     </head>
 
     <body id="page-top">
