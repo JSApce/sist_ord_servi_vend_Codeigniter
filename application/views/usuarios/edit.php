@@ -27,24 +27,25 @@
                         <div class="col-md-4">
                             <label >Nome</label>
                             <input type="text" class="form-control" name="first_name" value="<?php echo $usuario->first_name ?>">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('first_name', '<small class="form-text text-danger">', '</small>') ?>
+
                         </div>
                         <div class="col-md-4">
                             <label >Sobrenome</label>
                             <input type="text" class="form-control" name="last_name" value="<?php echo $usuario->last_name ?>">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('last_name', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-4">
                             <label >E-mail</label>
                             <input type="email" class="form-control" name="email" value="<?php echo $usuario->email ?>">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('email', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-md-4">
                             <label >Usuário</label>
                             <input type="text" class="form-control" name="username" value="<?php echo $usuario->username ?>">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('username', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-4">
                             <label >Ativo</label>
@@ -65,12 +66,12 @@
                         <div class="col-md-6">
                             <label>Senha</label>
                             <input type="password" class="form-control" name="password">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('password', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-6">
                             <label>Confirme Senha</label>
                             <input type="password" class="form-control" name="confirm_password">
-                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                            <?php echo form_error('confirm_password', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
 
                         <input type="hidden" name="usuario_id" value="<?php echo $usuario->id ?>">
