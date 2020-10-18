@@ -25,6 +25,54 @@ class Usuarios extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
+    public function add() {
+
+        $this->form_validation->set_rules('first_name', '', 'trim|required|min_length[2]|max_length[50]');
+        $this->form_validation->set_rules('last_name', '', 'trim|required|min_length[2]|max_length[50]');
+        $this->form_validation->set_rules('email', '', 'trim|required|valid_email|is_unique[users.email]|max_length[250]');
+        $this->form_validation->set_rules('username', '', 'trim|required|is_unique[users.username]|max_length[100]');
+        $this->form_validation->set_rules('password', 'Senha', 'required|min_length[5]|max_length[120]');
+        $this->form_validation->set_rules('confirm_password', 'Confirme', 'matches[password]');
+
+        if ($this->form_validation->run()) {
+
+            $username = $this->security->xss_clean($this->input->post('username'));
+            $password = $this->security->xss_clean($this->input->post('password'));
+            $email = $this->security->xss_clean($this->input->post('email'));
+            $additional_data = array(
+                'first_name' => $this->input->post('first_name'),
+                'last_name' => $this->input->post('last_name'),
+                'username' => $this->input->post('username'),
+                'active' => $this->input->post('active'),
+            );
+            $group = array($this->input->post('perfil_usuario'));
+
+            $additional_data = $this->security->xss_clean($additional_data);
+
+            $group = $this->security->xss_clean($group);
+
+            if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
+                $this->session->set_flashdata('success', 'Dados salvos com sucesso');
+            } else {
+
+                $this->session->set_flashdata('error', 'Erro ao salvar dados');
+            }
+
+            redirect('usuarios');
+        } else {
+
+            //Error de validação
+
+            $data = array(
+                'titulo' => 'Cadastrar usuário',
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('usuarios/add');
+            $this->load->view('layout/footer');
+        }
+    }
+
     public function edit($usuario_id = null) {
 
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
@@ -41,7 +89,7 @@ class Usuarios extends CI_Controller {
 
 
             if ($this->form_validation->run()) {
-//                exit('validado');
+
                 $data = elements(
                         array(
                             'first_name',
@@ -66,7 +114,7 @@ class Usuarios extends CI_Controller {
 
                     $perfil_usuario_db = $this->ion_auth->get_users_groups($usuario_id)->row();
                     $perfil_usuario_post = $this->input->post('perfil_usuario');
-                    
+
                     if ($perfil_usuario_post != $perfil_usuario_db->id) {
                         $this->ion_auth->remove_from_group($perfil_usuario_db->id, $usuario_id);
                         $this->ion_auth->add_to_group($perfil_usuario_post, $usuario_id);
@@ -83,28 +131,12 @@ class Usuarios extends CI_Controller {
                     'usuario' => $this->ion_auth->user($usuario_id)->row(),
                     'perfil_usuario' => $this->ion_auth->get_users_groups($usuario_id)->row(),
                 );
+
+                $this->load->view('layout/header', $data);
+                $this->load->view('usuarios/edit');
+                $this->load->view('layout/footer');
             }
         }
-
-//        Array
-//        (
-//        [first_name] => Admin
-//        [last_name] => istrator
-//        [email] => admin@admin.com
-//        [username] => administrator
-//        [active] => 1
-//        [perfil_usuario] => 1
-//        [password] =>
-//        [confirm_password] =>
-//        [usuario_id] => 1
-//        )
-//        echo '<pre>';
-//        print_r($this->input->post());
-//        exit();
-
-        $this->load->view('layout/header', $data);
-        $this->load->view('usuarios/edit');
-        $this->load->view('layout/footer');
     }
 
     public function email_check($email) {
