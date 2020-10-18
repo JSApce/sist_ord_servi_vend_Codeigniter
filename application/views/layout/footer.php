@@ -1,12 +1,14 @@
-<!-- Footer -->
-<footer class="sticky-footer bg-white">
-    <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Sistema Natação <?php echo date('Y')?>&nbsp; | By Jamerson Silva</span>
+<?php if (!$this->router->fetch_class() == 'login') : ?>
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Sistema Natação <?php echo date('Y') ?>&nbsp; | By Jamerson Silva</span>
+            </div>
         </div>
-    </div>
-</footer>
-<!-- End of Footer -->
+    </footer>
+    <!-- End of Footer -->
+<?php endif; ?>
 
 </div>
 <!-- End of Content Wrapper -->
@@ -38,20 +40,20 @@
     </div>
 </div>
 
- <!-- Bootstrap core JavaScript-->
-  <script src="<?php echo base_url('public/vendor/jquery/jquery.min.js'); ?>"></script>
-  <script src="<?php echo base_url('public/vendor/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
+<!-- Bootstrap core JavaScript-->
+<script src="<?php echo base_url('public/vendor/jquery/jquery.min.js'); ?>"></script>
+<script src="<?php echo base_url('public/vendor/bootstrap/js/bootstrap.bundle.min.js'); ?>"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="<?php echo base_url('public/vendor/jquery-easing/jquery.easing.min.js'); ?>"></script>
+<!-- Core plugin JavaScript-->
+<script src="<?php echo base_url('public/vendor/jquery-easing/jquery.easing.min.js'); ?>"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="<?php echo base_url('public/js/sb-admin-2.min.js'); ?>"></script>
+<!-- Custom scripts for all pages-->
+<script src="<?php echo base_url('public/js/sb-admin-2.min.js'); ?>"></script>
 <?php if (isset($scripts)) : ?>
-            <?php foreach ($scripts as $script) : ?>
-                <script src="<?php echo base_url('public/' .$script); ?>"></script>
-            <?php endforeach; ?>
-        <?php endif; ?>
+    <?php foreach ($scripts as $script) : ?>
+        <script src="<?php echo base_url('public/' . $script); ?>"></script>
+    <?php endforeach; ?>
+<?php endif; ?>
 </body>
 
 </html>
