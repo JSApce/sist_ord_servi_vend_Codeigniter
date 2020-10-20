@@ -6,11 +6,6 @@ class Usuarios extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-<<<<<<< HEAD
-
-=======
-        
->>>>>>> 06dc01be8ba35387f08704b5bd795e883cf8282f
         if (!$this->ion_auth->logged_in()) {
             $this->session->set_flashdata('info', 'Sua sessão expirou!');
             redirect('login');
