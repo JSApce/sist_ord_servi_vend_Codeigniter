@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-3">
                             <label >CNPJ</label>
-                            <input type="text" class="form-control form-control-user" name="sistema_cnpj" value="<?php echo $sistema->sistema_cnpj ?>">
+                            <input type="text" class="form-control form-control-user cnpj" name="sistema_cnpj" value="<?php echo $sistema->sistema_cnpj ?>">
                             <?php echo form_error('sistema_cnpj', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-3">
@@ -70,12 +70,12 @@
                     <div class="form-group row mb-3">
                         <div class="col-md-3">
                             <label >Telefone fixo</label>
-                            <input type="text" class="form-control form-control-user" name="sistema_telefone_fixo" value="<?php echo $sistema->sistema_telefone_fixo ?>">
+                            <input type="text" class="form-control form-control-user sp_celphones" name="sistema_telefone_fixo" value="<?php echo $sistema->sistema_telefone_fixo ?>">
                             <?php echo form_error('sistema_telefone_fixo', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-3">
                             <label >Telefone móvel</label>
-                            <input type="text" class="form-control form-control-user" name="sistema_telefone_movel" value="<?php echo $sistema->sistema_telefone_movel ?>">
+                            <input type="text" class="form-control form-control-user sp_celphones" name="sistema_telefone_movel" value="<?php echo $sistema->sistema_telefone_movel ?>">
                             <?php echo form_error('sistema_telefone_movel', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-3">
@@ -98,7 +98,7 @@
                         </div>
                         <div class="col-md-2">
                             <label >CEP</label>
-                            <input type="text" class="form-control form-control-user" name="sistema_cep" value="<?php echo $sistema->sistema_cep ?>">
+                            <input type="text" class="form-control form-control-user cep" name="sistema_cep" value="<?php echo $sistema->sistema_cep ?>">
                             <?php echo form_error('sistema_cep', '<small class="form-text text-danger">', '</small>') ?>
                         </div>
                         <div class="col-md-2">
@@ -114,7 +114,7 @@
                         </div>
                         <div class="col-md-2">
                             <label >UF</label>
-                            <input type="text" class="form-control form-control-user" name="sistema_estado" value="<?php echo $sistema->sistema_estado ?>">
+                            <input type="text" class="form-control form-control-user uf" name="sistema_estado" value="<?php echo $sistema->sistema_estado ?>">
                             <?php echo form_error('sistema_estado', '<small class="form-text text-danger">', '</small>') ?>
 
                         </div>
