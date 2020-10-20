@@ -6,7 +6,7 @@ class Usuarios extends CI_Controller {
 
     public function __construct() {
         parent::__construct();
-        
+
         if (!$this->ion_auth->logged_in()) {
             $this->session->set_flashdata('info', 'Sua sessão expirou!');
             redirect('login');
@@ -40,9 +40,9 @@ class Usuarios extends CI_Controller {
 
         if ($this->form_validation->run()) {
 
-            $username = $this->security->xss_clean($this->input->post('username'));
-            $password = $this->security->xss_clean($this->input->post('password'));
-            $email = $this->security->xss_clean($this->input->post('email'));
+            $username = html_escape($this->input->post('username'));
+            $password = html_escape($this->input->post('password'));
+            $email = html_escape($this->input->post('email'));
             $additional_data = array(
                 'first_name' => $this->input->post('first_name'),
                 'last_name' => $this->input->post('last_name'),
@@ -51,9 +51,8 @@ class Usuarios extends CI_Controller {
             );
             $group = array($this->input->post('perfil_usuario'));
 
-            $additional_data = $this->security->xss_clean($additional_data);
-
-            $group = $this->security->xss_clean($group);
+            $additional_data = html_escape($additional_data);
+            $group = html_escape($group);
 
             if ($this->ion_auth->register($username, $password, $email, $additional_data, $group)) {
                 $this->session->set_flashdata('success', 'Dados salvos com sucesso');
@@ -76,25 +75,25 @@ class Usuarios extends CI_Controller {
             $this->load->view('layout/footer');
         }
     }
-    
-     public function del($usuario_id = null) {
-          if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
+
+    public function del($usuario_id = null) {
+        if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');
             redirect('usuarios');
-        } 
-        
-        if($this->ion_auth->is_admin($usuario_id)) {
-             $this->session->set_flashdata('error', 'O administrador não pode ser excluído');
+        }
+
+        if ($this->ion_auth->is_admin($usuario_id)) {
+            $this->session->set_flashdata('error', 'O administrador não pode ser excluído');
             redirect('usuarios');
         }
-        
-        if($this->ion_auth->delete_user($usuario_id)) {
+
+        if ($this->ion_auth->delete_user($usuario_id)) {
             $this->session->set_flashdata('success', 'Usuário excluído com sucesso');
-        }else{
+        } else {
             $this->session->set_flashdata('error', 'Erro ao excluir Usuário');
         }
-        redirect('usuarios'); 
-     }
+        redirect('usuarios');
+    }
 
     public function edit($usuario_id = null) {
 
@@ -124,7 +123,7 @@ class Usuarios extends CI_Controller {
                         ), $this->input->post()
                 );
 
-                $data = $this->security->xss_clean($data);
+                $data = html_escape($data);
 
                 /* Verifica se foi passado o password */
                 $password = $this->input->post('password');
