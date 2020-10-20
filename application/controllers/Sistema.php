@@ -19,6 +19,7 @@ class Sistema extends CI_Controller {
             'sistema' => $this->core_model->get_by_id('sistema', array('sistema_id' == 1)),
         );
 
+<<<<<<< HEAD
         $this->form_validation->set_rules('sistema_razao_social', 'Razão social', 'trim|required|min_length[2]|max_length[140]');
         $this->form_validation->set_rules('sistema_nome_fantasia', 'Nome fantasia', 'trim|required|min_length[2]|max_length[140]');
         $this->form_validation->set_rules('sistema_cnpj', '', 'trim|required|exact_length[18]');
@@ -64,6 +65,11 @@ class Sistema extends CI_Controller {
             $this->load->view('sistema/index');
             $this->load->view('layout/footer');
         }
+=======
+        $this->load->view('layout/header', $data);
+        $this->load->view('sistema/index');
+        $this->load->view('layout/footer');
+>>>>>>> 06dc01be8ba35387f08704b5bd795e883cf8282f
     }
 
 //    public function add() {
@@ -218,4 +224,8 @@ class Sistema extends CI_Controller {
 //            return true;
 //        }
 //    }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 06dc01be8ba35387f08704b5bd795e883cf8282f
 }
