@@ -50,7 +50,7 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_complemento', '', 'trim|max_length[145]');
             $this->form_validation->set_rules('cliente_cidade', 'Cidade', 'trim|required|max_length[50]');
             $this->form_validation->set_rules('cliente_estado', 'UF', 'trim|required|exact_length[2]');
-            $this->form_validation->set_rules('cliente_observacao', '', 'trim|max_length[800]');
+            $this->form_validation->set_rules('cliente_obs', '', 'trim|max_length[800]');
 
             if ($this->form_validation->run()) {
                 echo '<pre>';
@@ -65,13 +65,13 @@ class Clientes extends CI_Controller {
                     ),
                     'cliente' => $this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id)),
                 );
-                
-                 echo '<pre>';
-                print_r($data['cliente']);
-                exit();
+
+//                 echo '<pre>';
+//                print_r($data['cliente']);
+//                exit();
 
                 $this->load->view('layout/header', $data);
-                $this->load->view('clientes/index');
+                $this->load->view('clientes/edit');
                 $this->load->view('layout/footer');
             }
         }
