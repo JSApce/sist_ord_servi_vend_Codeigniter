@@ -20,25 +20,26 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <form  class="user" method="POST" name="form_edit">
+                    <p><strong><i class="fas fa-clock"></i>&nbsp;&nbsp;Última alteração: </strong><?php echo formata_data_banco_com_hora($cliente->cliente_data_alteracao) ?></p>
                     <fieldset class="mt-4 border p-2">
                         <legend class="font-small">
                             <i class="fas fa-user-tie"></i>&nbsp;Dados pessoais
                         </legend>
                         <div class="form-group row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <label >Nome</label>
                                 <input type="text" class="form-control form-control-user" name="cliente_nome" value="<?php echo $cliente->cliente_nome ?>">
                                 <?php echo form_error('cliente_nome', '<small class="form-text text-danger">', '</small>') ?>
 
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <label >Sobrenome</label>
                                 <input type="text" class="form-control form-control-user" name="cliente_sobrenome" value="<?php echo $cliente->cliente_sobrenome ?>">
                                 <?php echo form_error('cliente_sobrenome', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-4">
                                 <label >Data nascimento</label>
-                                <input type="date" class="form-control form-control-user" name="cliente_data_nascimento" value="<?php echo $cliente->cliente_data_nascimento ?>">
+                                <input type="date" class="form-control form-control-user-date" name="cliente_data_nascimento" value="<?php echo $cliente->cliente_data_nascimento ?>">
                                 <?php echo form_error('cliente_data_nascimento', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
                         </div>
@@ -135,7 +136,7 @@
                         <div class="form-group row mb-3">
                             <div class="col-md-4">
                                 <label >Cliente ativo</label>
-                                <select class="form-control form-control-user" name="cliente_ativo">
+                                <select class="custom-select" name="cliente_ativo">
                                     <option value="0" <?php echo $cliente->cliente_ativo == 0 ? 'selected' : '' ?>>Não</option>
                                     <option value="1" <?php echo $cliente->cliente_ativo == 1 ? 'selected' : '' ?>>Sim</option>
                                 </select>
