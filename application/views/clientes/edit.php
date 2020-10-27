@@ -48,11 +48,13 @@
                             <div class="col-md-3">
                                 <?php if ($cliente->cliente_tipo == 1): ?>
                                     <label >CPF</label>
+                                     <input type="text" class="form-control form-control-user cpf" name="cliente_cpf" value="<?php echo $cliente->cliente_cpf_cnpj ?>">
+                                <?php echo form_error('cliente_cpf', '<small class="form-text text-danger">', '</small>') ?>
                                 <?php else: ?>
                                     <label >CPF ou CNPJ</label>
+                                    <input type="text" class="form-control form-control-user cnpj" name="cliente_cnpj" value="<?php echo $cliente->cliente_cpf_cnpj ?>">
+                                <?php echo form_error('cliente_cnpj', '<small class="form-text text-danger">', '</small>') ?>
                                 <?php endif; ?>
-                                <input type="text" class="form-control form-control-user cnpj" name="cliente_cpf_cnpj" value="<?php echo $cliente->cliente_cpf_cnpj ?>">
-                                <?php echo form_error('cliente_cpf_cnpj', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
                             <div class="col-md-3">
                                   <?php if ($cliente->cliente_tipo == 1): ?>

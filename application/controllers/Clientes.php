@@ -38,10 +38,23 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_nome', '', 'trim|required|min_length[2]|max_length[45]');
             $this->form_validation->set_rules('cliente_sobrenome', '', 'trim|required|min_length[2]|max_length[150]');
             $this->form_validation->set_rules('cliente_data_nascimento', '', 'required');
-            $this->form_validation->set_rules('cliente_cpf_cnpj', '', 'trim|required|exact_length[18]');
-            $this->form_validation->set_rules('cliente_rg_ie', '', 'trim|required|max_length[20]');
-            $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]');
-            $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[14]');
+
+            $cliente_tipo = $this->input->post('cliente_tipo');
+
+//            if ($cliente_tipo == 1) {
+//                $this->form_validation->set_rules('cliente_cpf', '', 'trim|required|exact_length[18]|callback_valida_cpf');
+//            } else {
+//                $this->form_validation->set_rules('cliente_cnpj', '', 'trim|required|exact_length[18]|callback_valida_cnpj');
+//            }
+            $this->form_validation->set_rules('cliente_rg_ie', '', 'trim|required|max_length[20]|callback_check_rg_ie');
+            $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
+           
+            if($this->input->post('cliente_telefone')){
+                 $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[14]|callback_check_telefone');
+            }else{
+                
+            }
+           
             $this->form_validation->set_rules('cliente_celular', 'Celular', 'trim|max_length[15]');
             $this->form_validation->set_rules('cliente_cep', '', 'trim|required|exact_length[9]');
             $this->form_validation->set_rules('cliente_endereco', 'Endereço', 'trim|required|max_length[155]');
@@ -53,9 +66,7 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_obs', '', 'trim|max_length[800]');
 
             if ($this->form_validation->run()) {
-                echo '<pre>';
-                print_r($this->input->post());
-                exit();
+                exit('Validado');
             } else {
                 $data = array(
                     'titulo' => 'Atualizar cliente',
@@ -74,6 +85,28 @@ class Clientes extends CI_Controller {
                 $this->load->view('clientes/edit');
                 $this->load->view('layout/footer');
             }
+        }
+    }
+
+    public function check_rg_ie($cliente_rg_ie) {
+        $cliente_id = $this->input->post('cliente_id');
+        
+        if($this->core_model->get_by_id('clientes', array('cliente_rg_ie' => $cliente_rg_ie, 'cliente_id !=' => $cliente_id))){
+          $this->form_validation->message('check_rg_ie', 'Esse documento já existe');
+            return FALSE;
+        } else {
+            return TRUE;
+        }
+    }
+    
+    public function check_email($cliente_email) {
+        $cliente_id = $this->input->post('cliente_id');
+        
+        if($this->core_model->get_by_id('clientes', array('cliente_email' => $cliente_email, 'cliente_id !=' => $cliente_id))){
+          $this->form_validation->message('cliente_rg_ie', 'Esse E-mail já existe');
+            return FALSE;
+        } else {
+            return TRUE;
         }
     }
 
