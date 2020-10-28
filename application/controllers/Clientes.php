@@ -50,7 +50,7 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
 
             if ($this->input->post('cliente_telefone')) {
-                $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[14]|callback_check_telefone');
+                $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[15]|callback_check_telefone');
             }
             if ($this->input->post('cliente_celular')) {
                 $this->form_validation->set_rules('cliente_celular', 'Celular', 'trim|max_length[15]|callback_check_celular');
@@ -67,7 +67,65 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_obs', '', 'trim|max_length[800]');
 
             if ($this->form_validation->run()) {
-                exit('Validado');
+
+//                Array
+//                (
+//                [cliente_nome] => Jamerson
+//                [cliente_sobrenome] => Silva
+//                [cliente_data_nascimento] => 2020-10-07
+//                [cliente_cpf] => 302.728.150-04
+//                [cliente_rg_ie] => 213
+//                [cliente_email] => dasdas@asd.ccs
+//                [cliente_telefone] => (32) 13123-1312
+//                [cliente_celular] => (12) 32132-1312
+//                [cliente_endereco] => asdadas
+//                [cliente_numero_endereco] => asdas
+//                [cliente_complemento] => asdasd
+//                [cliente_bairro] => asdas
+//                [cliente_cidade] => asd
+//                [cliente_estado] => as
+//                [cliente_cep] => 31242-423
+//                [cliente_ativo] => 1
+//                [cliente_obs] => asdasdasdas
+//                [cliente_tipo] => 1
+//                [cliente_id] => 1
+//                )
+
+                $data = elements(
+                        array(
+                            'cliente_nome',
+                            'cliente_sobrenome',
+                            'cliente_data_nascimento',
+                            'cliente_rg_ie',
+                            'cliente_email',
+                            'cliente_telefone',
+                            'cliente_celular',
+                            'cliente_endereco',
+                            'cliente_numero_endereco',
+                            'cliente_complemento',
+                            'cliente_bairro',
+                            'cliente_cidade',
+                            'cliente_estado',
+                            'cliente_cep',
+                            'cliente_ativo',
+                            'cliente_obs',
+                            'cliente_tipo',
+                        ), $this->input->post());
+
+                if ($cliente_tipo == 1) {
+                    $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cpf');
+                } else {
+                    $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cnpj');
+                }
+
+                $data['cliente_estado'] = strtoupper($this->input->post('cliente_estado'));
+                
+                $data = html_escape($data);
+                
+                $this->core_model->update('clientes', $data, array('cliente_id' => $cliente_id));
+                
+                redirect('clientes');
+                
             } else {
                 $data = array(
                     'titulo' => 'Atualizar cliente',
