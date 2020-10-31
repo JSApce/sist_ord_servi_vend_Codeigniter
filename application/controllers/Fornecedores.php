@@ -30,214 +30,215 @@ class Fornecedores extends CI_Controller {
     }
 
 //    public function add() {
-//        $this->form_validation->set_rules('cliente_nome', '', 'trim|required|min_length[2]|max_length[45]');
-//        $this->form_validation->set_rules('cliente_sobrenome', '', 'trim|required|min_length[2]|max_length[150]');
-//        $this->form_validation->set_rules('cliente_data_nascimento', '', 'required');
+//        $this->form_validation->set_rules('fornecedor_nome', '', 'trim|required|min_length[2]|max_length[45]');
+//        $this->form_validation->set_rules('fornecedor_sobrenome', '', 'trim|required|min_length[2]|max_length[150]');
+//        $this->form_validation->set_rules('fornecedor_data_nascimento', '', 'required');
 //
-//        $cliente_tipo = $this->input->post('cliente_tipo');
+//        $fornecedor_tipo = $this->input->post('fornecedor_tipo');
 //
-//        if ($cliente_tipo == 1) {
-//            $this->form_validation->set_rules('cliente_cpf', '', 'trim|required|exact_length[14]|is_unique[clientes.cliente_cpf_cnpj]|callback_valida_cpf');
+//        if ($fornecedor_tipo == 1) {
+//            $this->form_validation->set_rules('fornecedor_cpf', '', 'trim|required|exact_length[14]|is_unique[fornecedores.fornecedor_cpf_cnpj]|callback_valida_cpf');
 //        } else {
-//            $this->form_validation->set_rules('cliente_cnpj', '', 'trim|required|exact_length[18]|is_unique[clientes.cliente_cpf_cnpj]|callback_valida_cnpj');
+//            $this->form_validation->set_rules('fornecedor_cnpj', '', 'trim|required|exact_length[18]|is_unique[fornecedores.fornecedor_cpf_cnpj]|callback_valida_cnpj');
 //        }
-//        $this->form_validation->set_rules('cliente_rg_ie', 'RG / I.E', 'trim|required|max_length[20]|is_unique[clientes.cliente_rg_ie]');
-//        $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]|is_unique[clientes.cliente_email]');
+//        $this->form_validation->set_rules('fornecedor_rg_ie', 'RG / I.E', 'trim|required|max_length[20]|is_unique[fornecedores.fornecedor_rg_ie]');
+//        $this->form_validation->set_rules('fornecedor_email', '', 'trim|required|valid_email|max_length[50]|is_unique[fornecedores.fornecedor_email]');
 //
-//        if ($this->input->post('cliente_telefone')) {
-//            $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[15]|is_unique[clientes.cliente_telefone]');
+//        if ($this->input->post('fornecedor_telefone')) {
+//            $this->form_validation->set_rules('fornecedor_telefone', 'Telefone', 'trim|max_length[15]|is_unique[fornecedores.fornecedor_telefone]');
 //        }
-//        if ($this->input->post('cliente_celular')) {
-//            $this->form_validation->set_rules('cliente_celular', 'Celular', 'trim|max_length[15]|is_unique[clientes.cliente_celular]');
+//        if ($this->input->post('fornecedor_celular')) {
+//            $this->form_validation->set_rules('fornecedor_celular', 'Celular', 'trim|max_length[15]|is_unique[fornecedores.fornecedor_celular]');
 //        }
 //
 //
-//        $this->form_validation->set_rules('cliente_cep', '', 'trim|required|exact_length[9]');
-//        $this->form_validation->set_rules('cliente_endereco', 'Endereço', 'trim|required|max_length[155]');
-//        $this->form_validation->set_rules('cliente_numero_endereco', '', 'trim|max_length[20]');
-//        $this->form_validation->set_rules('cliente_bairro', '', 'trim|required|max_length[45]');
-//        $this->form_validation->set_rules('cliente_complemento', '', 'trim|max_length[145]');
-//        $this->form_validation->set_rules('cliente_cidade', 'Cidade', 'trim|required|max_length[50]');
-//        $this->form_validation->set_rules('cliente_estado', 'UF', 'trim|required|exact_length[2]');
-//        $this->form_validation->set_rules('cliente_obs', '', 'trim|max_length[800]');
+//        $this->form_validation->set_rules('fornecedor_cep', '', 'trim|required|exact_length[9]');
+//        $this->form_validation->set_rules('fornecedor_endereco', 'Endereço', 'trim|required|max_length[155]');
+//        $this->form_validation->set_rules('fornecedor_numero_endereco', '', 'trim|max_length[20]');
+//        $this->form_validation->set_rules('fornecedor_bairro', '', 'trim|required|max_length[45]');
+//        $this->form_validation->set_rules('fornecedor_complemento', '', 'trim|max_length[145]');
+//        $this->form_validation->set_rules('fornecedor_cidade', 'Cidade', 'trim|required|max_length[50]');
+//        $this->form_validation->set_rules('fornecedor_estado', 'UF', 'trim|required|exact_length[2]');
+//        $this->form_validation->set_rules('fornecedor_obs', '', 'trim|max_length[800]');
 //
 //        if ($this->form_validation->run()) {
 //
 //            $data = elements(
 //                    array(
-//                        'cliente_nome',
-//                        'cliente_sobrenome',
-//                        'cliente_data_nascimento',
-//                        'cliente_rg_ie',
-//                        'cliente_email',
-//                        'cliente_telefone',
-//                        'cliente_celular',
-//                        'cliente_endereco',
-//                        'cliente_numero_endereco',
-//                        'cliente_complemento',
-//                        'cliente_bairro',
-//                        'cliente_cidade',
-//                        'cliente_estado',
-//                        'cliente_cep',
-//                        'cliente_ativo',
-//                        'cliente_obs',
-//                        'cliente_tipo',
+//                        'fornecedor_nome',
+//                        'fornecedor_sobrenome',
+//                        'fornecedor_data_nascimento',
+//                        'fornecedor_rg_ie',
+//                        'fornecedor_email',
+//                        'fornecedor_telefone',
+//                        'fornecedor_celular',
+//                        'fornecedor_endereco',
+//                        'fornecedor_numero_endereco',
+//                        'fornecedor_complemento',
+//                        'fornecedor_bairro',
+//                        'fornecedor_cidade',
+//                        'fornecedor_estado',
+//                        'fornecedor_cep',
+//                        'fornecedor_ativo',
+//                        'fornecedor_obs',
+//                        'fornecedor_tipo',
 //                    ), $this->input->post());
 //
-//            if ($cliente_tipo == 1) {
-//                $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cpf');
+//            if ($fornecedor_tipo == 1) {
+//                $data['fornecedor_cpf_cnpj'] = $this->input->post('fornecedor_cpf');
 //            } else {
-//                $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cnpj');
+//                $data['fornecedor_cpf_cnpj'] = $this->input->post('fornecedor_cnpj');
 //            }
 //
-//            $data['cliente_estado'] = strtoupper($this->input->post('cliente_estado'));
+//            $data['fornecedor_estado'] = strtoupper($this->input->post('fornecedor_estado'));
 //
 //            $data = html_escape($data);
 //
-//            $this->core_model->insert('clientes', $data);
+//            $this->core_model->insert('fornecedores', $data);
 //
-//            redirect('clientes');
+//            redirect('fornecedores');
 //        } else {
 //            $data = array(
-//                'titulo' => 'Cadastrar cliente',
+//                'titulo' => 'Cadastrar fornecedor',
 //                'scripts' => array(
 //                    'vendor/mask/jquery.mask.min.js',
 //                    'vendor/mask/app.js',
-//                    'js/cliente.js',
+//                    'js/fornecedor.js',
 //                ),
 //            );
 //
 ////                 echo '<pre>';
-////                print_r($data['cliente']);
+////                print_r($data['fornecedor']);
 ////                exit();
 //
 //            $this->load->view('layout/header', $data);
-//            $this->load->view('clientes/add');
+//            $this->load->view('fornecedores/add');
 //            $this->load->view('layout/footer');
 //        }
 //    }
+
+    public function edit($fornecedor_id = NULL) {
+        if (!$fornecedor_id || !$this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id))) {
+            $this->session->set_flashdata('error', 'Fornecedor não encontrado');
+            redirect('fornecedores');
+        } else {
+
+//            $this->form_validation->set_rules('fornecedor_nome', '', 'trim|required|min_length[2]|max_length[45]');
+//            $this->form_validation->set_rules('fornecedor_sobrenome', '', 'trim|required|min_length[2]|max_length[150]');
+//            $this->form_validation->set_rules('fornecedor_data_nascimento', '', 'required');
 //
-//    public function edit($cliente_id = null) {
-//        if (!$cliente_id || !$this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id))) {
-//            $this->session->set_flashdata('error', 'Cliente não encontrado');
-//            redirect('clientes');
-//        } else {
+//            $fornecedor_tipo = $this->input->post('fornecedor_tipo');
 //
-//            $this->form_validation->set_rules('cliente_nome', '', 'trim|required|min_length[2]|max_length[45]');
-//            $this->form_validation->set_rules('cliente_sobrenome', '', 'trim|required|min_length[2]|max_length[150]');
-//            $this->form_validation->set_rules('cliente_data_nascimento', '', 'required');
-//
-//            $cliente_tipo = $this->input->post('cliente_tipo');
-//
-//            if ($cliente_tipo == 1) {
-//                $this->form_validation->set_rules('cliente_cpf', '', 'trim|required|exact_length[14]|callback_valida_cpf');
+//            if ($fornecedor_tipo == 1) {
+//                $this->form_validation->set_rules('fornecedor_cpf', '', 'trim|required|exact_length[14]|callback_valida_cpf');
 //            } else {
-//                $this->form_validation->set_rules('cliente_cnpj', '', 'trim|required|exact_length[18]|callback_valida_cnpj');
+//                $this->form_validation->set_rules('fornecedor_cnpj', '', 'trim|required|exact_length[18]|callback_valida_cnpj');
 //            }
-//            $this->form_validation->set_rules('cliente_rg_ie', 'RG / I.E', 'trim|required|max_length[20]|callback_check_rg_ie');
-//            $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
+//            $this->form_validation->set_rules('fornecedor_rg_ie', 'RG / I.E', 'trim|required|max_length[20]|callback_check_rg_ie');
+//            $this->form_validation->set_rules('fornecedor_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
 //
-//            if ($this->input->post('cliente_telefone')) {
-//                $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[15]|callback_check_telefone');
+//            if ($this->input->post('fornecedor_telefone')) {
+//                $this->form_validation->set_rules('fornecedor_telefone', 'Telefone', 'trim|max_length[15]|callback_check_telefone');
 //            }
-//            if ($this->input->post('cliente_celular')) {
-//                $this->form_validation->set_rules('cliente_celular', 'Celular', 'trim|max_length[15]|callback_check_celular');
+//            if ($this->input->post('fornecedor_celular')) {
+//                $this->form_validation->set_rules('fornecedor_celular', 'Celular', 'trim|max_length[15]|callback_check_celular');
 //            }
 //
 //
-//            $this->form_validation->set_rules('cliente_cep', '', 'trim|required|exact_length[9]');
-//            $this->form_validation->set_rules('cliente_endereco', 'Endereço', 'trim|required|max_length[155]');
-//            $this->form_validation->set_rules('cliente_numero_endereco', '', 'trim|max_length[20]');
-//            $this->form_validation->set_rules('cliente_bairro', '', 'trim|required|max_length[45]');
-//            $this->form_validation->set_rules('cliente_complemento', '', 'trim|max_length[145]');
-//            $this->form_validation->set_rules('cliente_cidade', 'Cidade', 'trim|required|max_length[50]');
-//            $this->form_validation->set_rules('cliente_estado', 'UF', 'trim|required|exact_length[2]');
-//            $this->form_validation->set_rules('cliente_obs', '', 'trim|max_length[800]');
+//            $this->form_validation->set_rules('fornecedor_cep', '', 'trim|required|exact_length[9]');
+//            $this->form_validation->set_rules('fornecedor_endereco', 'Endereço', 'trim|required|max_length[155]');
+//            $this->form_validation->set_rules('fornecedor_numero_endereco', '', 'trim|max_length[20]');
+//            $this->form_validation->set_rules('fornecedor_bairro', '', 'trim|required|max_length[45]');
+//            $this->form_validation->set_rules('fornecedor_complemento', '', 'trim|max_length[145]');
+//            $this->form_validation->set_rules('fornecedor_cidade', 'Cidade', 'trim|required|max_length[50]');
+//            $this->form_validation->set_rules('fornecedor_estado', 'UF', 'trim|required|exact_length[2]');
+//            $this->form_validation->set_rules('fornecedor_obs', '', 'trim|max_length[800]');
 //
 //            if ($this->form_validation->run()) {
 //
-////                Array
-////                (
-////                [cliente_nome] => Jamerson
-////                [cliente_sobrenome] => Silva
-////                [cliente_data_nascimento] => 2020-10-07
-////                [cliente_cpf] => 302.728.150-04
-////                [cliente_rg_ie] => 213
-////                [cliente_email] => dasdas@asd.ccs
-////                [cliente_telefone] => (32) 13123-1312
-////                [cliente_celular] => (12) 32132-1312
-////                [cliente_endereco] => asdadas
-////                [cliente_numero_endereco] => asdas
-////                [cliente_complemento] => asdasd
-////                [cliente_bairro] => asdas
-////                [cliente_cidade] => asd
-////                [cliente_estado] => as
-////                [cliente_cep] => 31242-423
-////                [cliente_ativo] => 1
-////                [cliente_obs] => asdasdasdas
-////                [cliente_tipo] => 1
-////                [cliente_id] => 1
-////                )
-//
 //                $data = elements(
 //                        array(
-//                            'cliente_nome',
-//                            'cliente_sobrenome',
-//                            'cliente_data_nascimento',
-//                            'cliente_rg_ie',
-//                            'cliente_email',
-//                            'cliente_telefone',
-//                            'cliente_celular',
-//                            'cliente_endereco',
-//                            'cliente_numero_endereco',
-//                            'cliente_complemento',
-//                            'cliente_bairro',
-//                            'cliente_cidade',
-//                            'cliente_estado',
-//                            'cliente_cep',
-//                            'cliente_ativo',
-//                            'cliente_obs',
-//                            'cliente_tipo',
+//                            'fornecedor_nome',
+//                            'fornecedor_sobrenome',
+//                            'fornecedor_data_nascimento',
+//                            'fornecedor_rg_ie',
+//                            'fornecedor_email',
+//                            'fornecedor_telefone',
+//                            'fornecedor_celular',
+//                            'fornecedor_endereco',
+//                            'fornecedor_numero_endereco',
+//                            'fornecedor_complemento',
+//                            'fornecedor_bairro',
+//                            'fornecedor_cidade',
+//                            'fornecedor_estado',
+//                            'fornecedor_cep',
+//                            'fornecedor_ativo',
+//                            'fornecedor_obs',
+//                            'fornecedor_tipo',
 //                        ), $this->input->post());
 //
-//                if ($cliente_tipo == 1) {
-//                    $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cpf');
+//                if ($fornecedor_tipo == 1) {
+//                    $data['fornecedor_cpf_cnpj'] = $this->input->post('fornecedor_cpf');
 //                } else {
-//                    $data['cliente_cpf_cnpj'] = $this->input->post('cliente_cnpj');
+//                    $data['fornecedor_cpf_cnpj'] = $this->input->post('fornecedor_cnpj');
 //                }
 //
-//                $data['cliente_estado'] = strtoupper($this->input->post('cliente_estado'));
+//                $data['fornecedor_estado'] = strtoupper($this->input->post('fornecedor_estado'));
 //
 //                $data = html_escape($data);
 //
-//                $this->core_model->update('clientes', $data, array('cliente_id' => $cliente_id));
+//                $this->core_model->update('fornecedores', $data, array('fornecedor_id' => $fornecedor_id));
 //
-//                redirect('clientes');
+//                redirect('fornecedores');
 //            } else {
-//                $data = array(
-//                    'titulo' => 'Atualizar cliente',
-//                    'scripts' => array(
-//                        'vendor/mask/jquery.mask.min.js',
-//                        'vendor/mask/app.js',
-//                    ),
-//                    'cliente' => $this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id)),
-//                );
-//
-////                 echo '<pre>';
-////                print_r($data['cliente']);
-////                exit();
-//
-//                $this->load->view('layout/header', $data);
-//                $this->load->view('clientes/edit');
-//                $this->load->view('layout/footer');
+            $data = array(
+                'titulo' => 'Atualizar fornecedor',
+                'scripts' => array(
+                    'vendor/mask/jquery.mask.min.js',
+                    'vendor/mask/app.js',
+                ),
+                'fornecedor' => $this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id)),
+            );
+
+//            echo '<pre>';
+//            print_r($data['fornecedor']);
+//            exit();
+
+            /*
+             [fornecedor_razao] => Lucio componentes LTDA
+              [fornecedor_id] => 1
+              [fornecedor_data_cadastro] => 2020-10-31 19:28:54
+             
+              [fornecedor_nome_fantasia] => lucio inc
+              [fornecedor_cnpj] => 65.970.000/0001-60
+              [fornecedor_ie] =>
+              [fornecedor_telefone] =>
+              [fornecedor_celular] =>
+              [fornecedor_email] => lucio@contato.com.br
+              [fornecedor_contato] => Fulano de tal
+              [fornecedor_cep] =>
+              [fornecedor_endereco] =>
+              [fornecedor_numero_endereco] =>
+              [fornecedor_bairro] =>
+              [fornecedor_complemento] =>
+              [fornecedor_cidade] =>
+              [fornecedor_estado] =>
+              [fornecedor_ativo] => 1
+              [fornecedor_obs] =>
+              [fornecedor_data_alteracao] => 2020-10-31 19:28:54
+             */
+
+                $this->load->view('layout/header', $data);
+                $this->load->view('fornecedores/edit');
+                $this->load->view('layout/footer');
 //            }
-//        }
-//    }
+        }
+    }
+
+//    public function check_rg_ie($fornecedor_rg_ie) {
+//        $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//    public function check_rg_ie($cliente_rg_ie) {
-//        $cliente_id = $this->input->post('cliente_id');
-//
-//        if ($this->core_model->get_by_id('clientes', array('cliente_rg_ie' => $cliente_rg_ie, 'cliente_id !=' => $cliente_id))) {
+//        if ($this->core_model->get_by_id('fornecedores', array('fornecedor_rg_ie' => $fornecedor_rg_ie, 'fornecedor_id !=' => $fornecedor_id))) {
 //            $this->form_validation->message('check_rg_ie', 'Esse documento já existe');
 //            return FALSE;
 //        } else {
@@ -245,21 +246,21 @@ class Fornecedores extends CI_Controller {
 //        }
 //    }
 //
-//    public function check_email($cliente_email) {
-//        $cliente_id = $this->input->post('cliente_id');
+//    public function check_email($fornecedor_email) {
+//        $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//        if ($this->core_model->get_by_id('clientes', array('cliente_email' => $cliente_email, 'cliente_id !=' => $cliente_id))) {
-//            $this->form_validation->message('cliente_rg_ie', 'Esse E-mail já existe');
+//        if ($this->core_model->get_by_id('fornecedores', array('fornecedor_email' => $fornecedor_email, 'fornecedor_id !=' => $fornecedor_id))) {
+//            $this->form_validation->message('fornecedor_rg_ie', 'Esse E-mail já existe');
 //            return FALSE;
 //        } else {
 //            return TRUE;
 //        }
 //    }
 //
-//    public function check_telefone($cliente_telefone) {
-//        $cliente_id = $this->input->post('cliente_id');
+//    public function check_telefone($fornecedor_telefone) {
+//        $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//        if ($this->core_model->get_by_id('clientes', array('cliente_telefone' => $cliente_telefone, 'cliente_id !=' => $cliente_id))) {
+//        if ($this->core_model->get_by_id('fornecedores', array('fornecedor_telefone' => $fornecedor_telefone, 'fornecedor_id !=' => $fornecedor_id))) {
 //            $this->form_validation->message('check_telefone', 'Esse telefone já existe');
 //            return FALSE;
 //        } else {
@@ -267,10 +268,10 @@ class Fornecedores extends CI_Controller {
 //        }
 //    }
 //
-//    public function check_celular($cliente_celular) {
-//        $cliente_id = $this->input->post('cliente_id');
+//    public function check_celular($fornecedor_celular) {
+//        $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//        if ($this->core_model->get_by_id('clientes', array('cliente_celular' => $cliente_celular, 'cliente_id !=' => $cliente_id))) {
+//        if ($this->core_model->get_by_id('fornecedores', array('fornecedor_celular' => $fornecedor_celular, 'fornecedor_id !=' => $fornecedor_id))) {
 //            $this->form_validation->message('check_celular', 'Esse celular já existe');
 //            return FALSE;
 //        } else {
@@ -280,11 +281,11 @@ class Fornecedores extends CI_Controller {
 //
 //    public function valida_cpf($cpf) {
 //
-//        if ($this->input->post('cliente_id')) {
+//        if ($this->input->post('fornecedor_id')) {
 //
-//            $cliente_id = $this->input->post('cliente_id');
+//            $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//            if ($this->core_model->get_by_id('clientes', array('cliente_id !=' => $cliente_id, 'cliente_cpf_cnpj' => $cpf))) {
+//            if ($this->core_model->get_by_id('fornecedores', array('fornecedor_id !=' => $fornecedor_id, 'fornecedor_cpf_cnpj' => $cpf))) {
 //                $this->form_validation->set_message('valida_cpf', 'Este CPF já existe');
 //                return FALSE;
 //            }
@@ -322,11 +323,11 @@ class Fornecedores extends CI_Controller {
 //            return false;
 //        }
 //
-//        if ($this->input->post('cliente_id')) {
+//        if ($this->input->post('fornecedor_id')) {
 //
-//            $cliente_id = $this->input->post('cliente_id');
+//            $fornecedor_id = $this->input->post('fornecedor_id');
 //
-//            if ($this->core_model->get_by_id('clientes', array('cliente_id !=' => $cliente_id, 'cliente_cpf_cnpj' => $cnpj))) {
+//            if ($this->core_model->get_by_id('fornecedores', array('fornecedor_id !=' => $fornecedor_id, 'fornecedor_cpf_cnpj' => $cnpj))) {
 //                $this->form_validation->set_message('valida_cnpj', 'Esse CNPJ já existe');
 //                return FALSE;
 //            }
@@ -397,14 +398,13 @@ class Fornecedores extends CI_Controller {
 //        }
 //    }
 //
-//    public function del($cliente_id = NULL) {
-//        if (!$cliente_id || !$this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id))) {
+//    public function del($fornecedor_id = NULL) {
+//        if (!$fornecedor_id || !$this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id))) {
 //            $this->session->set_flashdata('error', 'Cliente não encontrado');
-//            redirect('clientes');
+//            redirect('fornecedores');
 //        } else {
-//            $this->core_model->delete('clientes', array('cliente_id' => $cliente_id));
-//            redirect('clientes');
+//            $this->core_model->delete('fornecedores', array('fornecedor_id' => $fornecedor_id));
+//            redirect('fornecedores');
 //        }
 //    }
-
 }

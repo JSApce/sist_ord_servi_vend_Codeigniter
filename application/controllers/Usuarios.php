@@ -75,7 +75,7 @@ class Usuarios extends CI_Controller {
         }
     }
 
-    public function del($usuario_id = null) {
+    public function del($usuario_id = NULL) {
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');
             redirect('usuarios');
@@ -94,7 +94,7 @@ class Usuarios extends CI_Controller {
         redirect('usuarios');
     }
 
-    public function edit($usuario_id = null) {
+    public function edit($usuario_id = NULL) {
 
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');

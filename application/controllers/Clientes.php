@@ -117,7 +117,7 @@ class Clientes extends CI_Controller {
         }
     }
 
-    public function edit($cliente_id = null) {
+    public function edit($cliente_id = NULL) {
         if (!$cliente_id || !$this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id))) {
             $this->session->set_flashdata('error', 'Cliente não encontrado');
             redirect('clientes');
