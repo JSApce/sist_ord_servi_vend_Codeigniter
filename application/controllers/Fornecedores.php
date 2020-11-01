@@ -31,30 +31,6 @@ class Fornecedores extends CI_Controller {
 
     public function add() {
 
-        /*
-          [fornecedor_razao] => Lucio componentes LTDA
-          [fornecedor_id] => 1
-          [fornecedor_data_cadastro] => 2020-10-31 19:28:54
-
-          [fornecedor_nome_fantasia] => lucio inc
-          [fornecedor_cnpj] => 65.970.000/0001-60
-          [fornecedor_ie] =>
-          [fornecedor_telefone] =>
-          [fornecedor_celular] =>
-          [fornecedor_email] => lucio@contato.com.br
-          [fornecedor_contato] => Fulano de tal
-          [fornecedor_cep] =>
-          [fornecedor_endereco] =>
-          [fornecedor_numero_endereco] =>
-          [fornecedor_bairro] =>
-          [fornecedor_complemento] =>
-          [fornecedor_cidade] =>
-          [fornecedor_estado] =>
-          [fornecedor_ativo] => 1
-          [fornecedor_obs] =>
-          [fornecedor_data_alteracao] => 2020-10-31 19:28:54
-         */
-
         $this->form_validation->set_rules('fornecedor_razao', '', 'trim|required|min_length[2]|max_length[200]|is_unique[fornecedores.fornecedor_razao]');
         $this->form_validation->set_rules('fornecedor_nome_fantasia', '', 'trim|required|min_length[2]|max_length[145]|is_unique[fornecedores.fornecedor_nome_fantasia]');
         $this->form_validation->set_rules('fornecedor_cnpj', 'CNPJ', 'trim|required|exact_length[18]|is_unique[fornecedores.fornecedor_cnpj]|callback_valida_cnpj');
@@ -182,10 +158,6 @@ class Fornecedores extends CI_Controller {
                     ),
                     'fornecedor' => $this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id)),
                 );
-
-//            echo '<pre>';
-//            print_r($data['fornecedor']);
-//            exit();
 
                 $this->load->view('layout/header', $data);
                 $this->load->view('fornecedores/edit');
@@ -343,13 +315,13 @@ class Fornecedores extends CI_Controller {
         }
     }
 
-//    public function del($fornecedor_id = NULL) {
-//        if (!$fornecedor_id || !$this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id))) {
-//            $this->session->set_flashdata('error', 'Cliente não encontrado');
-//            redirect('fornecedores');
-//        } else {
-//            $this->core_model->delete('fornecedores', array('fornecedor_id' => $fornecedor_id));
-//            redirect('fornecedores');
-//        }
-//    }
+    public function del($fornecedor_id = NULL) {
+        if (!$fornecedor_id || !$this->core_model->get_by_id('fornecedores', array('fornecedor_id' => $fornecedor_id))) {
+            $this->session->set_flashdata('error', 'Fornecedor não encontrado');
+            redirect('fornecedores');
+        } else {
+            $this->core_model->delete('fornecedores', array('fornecedor_id' => $fornecedor_id));
+            redirect('fornecedores');
+        }
+    }
 }
