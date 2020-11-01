@@ -137,10 +137,10 @@ class Clientes extends CI_Controller {
             $this->form_validation->set_rules('cliente_rg_ie', 'RG / I.E', 'trim|required|max_length[20]|callback_check_rg_ie');
             $this->form_validation->set_rules('cliente_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
 
-            if ($this->input->post('cliente_telefone')) {
+            if (!empty($this->input->post('cliente_telefone'))) {
                 $this->form_validation->set_rules('cliente_telefone', 'Telefone', 'trim|max_length[15]|callback_check_telefone');
             }
-            if ($this->input->post('cliente_celular')) {
+            if (!empty($this->input->post('cliente_celular'))) {
                 $this->form_validation->set_rules('cliente_celular', 'Celular', 'trim|max_length[15]|callback_check_celular');
             }
 
@@ -249,7 +249,7 @@ class Clientes extends CI_Controller {
         $cliente_id = $this->input->post('cliente_id');
 
         if ($this->core_model->get_by_id('clientes', array('cliente_email' => $cliente_email, 'cliente_id !=' => $cliente_id))) {
-            $this->form_validation->message('cliente_rg_ie', 'Esse E-mail já existe');
+            $this->form_validation->message('check_email', 'Esse E-mail já existe');
             return FALSE;
         } else {
             return TRUE;
