@@ -109,7 +109,12 @@
                                 <?php echo form_error('fornecedor_bairro', '<small class="form-text text-danger">', '</small>') ?>
 
                             </div>
-                            <div class="col-md-3">
+                             <div class="col-md-2">
+                                <label >CEP</label>
+                                <input type="text" class="form-control form-control-user cep" name="fornecedor_cep" value="<?php echo $fornecedor->fornecedor_cep ?>">
+                                <?php echo form_error('fornecedor_cep', '<small class="form-text text-danger">', '</small>') ?>
+                            </div>
+                            <div class="col-md-5">
                                 <label >Cidade</label>
                                 <input type="text" class="form-control form-control-user" name="fornecedor_cidade" value="<?php echo $fornecedor->fornecedor_cidade ?>">
                                 <?php echo form_error('fornecedor_cidade', '<small class="form-text text-danger">', '</small>') ?>
@@ -122,11 +127,6 @@
 
                             </div>
 
-                            <div class="col-md-4">
-                                <label >CEP</label>
-                                <input type="text" class="form-control form-control-user cep" name="fornecedor_cep" value="<?php echo $fornecedor->fornecedor_cep ?>">
-                                <?php echo form_error('fornecedor_cep', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
                         </div>
                     </fieldset>
 

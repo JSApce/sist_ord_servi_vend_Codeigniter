@@ -33,6 +33,7 @@ class Fornecedores extends CI_Controller {
 
         $this->form_validation->set_rules('fornecedor_razao', '', 'trim|required|min_length[2]|max_length[200]|is_unique[fornecedores.fornecedor_razao]');
         $this->form_validation->set_rules('fornecedor_nome_fantasia', '', 'trim|required|min_length[2]|max_length[145]|is_unique[fornecedores.fornecedor_nome_fantasia]');
+        $this->form_validation->set_rules('fornecedor_contato', '', 'trim|min_length[2]|max_length[45]');
         $this->form_validation->set_rules('fornecedor_cnpj', 'CNPJ', 'trim|required|exact_length[18]|is_unique[fornecedores.fornecedor_cnpj]|callback_valida_cnpj');
         $this->form_validation->set_rules('fornecedor_ie', 'Inscrição estadual', 'trim|required|max_length[20]|is_unique[fornecedores.fornecedor_ie]');
         $this->form_validation->set_rules('fornecedor_email', '', 'trim|required|valid_email|max_length[50]|is_unique[fornecedores.fornecedor_email]');
@@ -60,6 +61,7 @@ class Fornecedores extends CI_Controller {
                         'fornecedor_email',
                         'fornecedor_telefone',
                         'fornecedor_celular',
+                        'fornecedor_contato',
                         'fornecedor_endereco',
                         'fornecedor_numero_endereco',
                         'fornecedor_complemento',
@@ -103,6 +105,7 @@ class Fornecedores extends CI_Controller {
 
             $this->form_validation->set_rules('fornecedor_razao', '', 'trim|required|min_length[2]|max_length[200]|callback_check_razao_social');
             $this->form_validation->set_rules('fornecedor_nome_fantasia', '', 'trim|required|min_length[2]|max_length[145]|callback_check_nome_fantasia');
+            $this->form_validation->set_rules('fornecedor_contato', '', 'trim|min_length[2]|max_length[45]');
             $this->form_validation->set_rules('fornecedor_cnpj', 'CNPJ', 'trim|required|exact_length[18]|callback_valida_cnpj');
             $this->form_validation->set_rules('fornecedor_ie', 'Inscrição estadual', 'trim|required|max_length[20]|callback_check_ie');
             $this->form_validation->set_rules('fornecedor_email', '', 'trim|required|valid_email|max_length[50]|callback_check_email');
@@ -130,6 +133,7 @@ class Fornecedores extends CI_Controller {
                             'fornecedor_email',
                             'fornecedor_telefone',
                             'fornecedor_celular',
+                             'fornecedor_contato',
                             'fornecedor_endereco',
                             'fornecedor_numero_endereco',
                             'fornecedor_complemento',

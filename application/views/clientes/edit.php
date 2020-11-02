@@ -90,7 +90,7 @@
 
                     <fieldset class="mt-4 mb-3 border p-2">
                         <legend class="font-small">
-                            <i class="fas fa-map-marker-alt"></i>&nbsp;Endereço
+                            <i class="fas fa-map-marker-alt"></i>&nbsp;Dados de Endereço
                         </legend>
                         <div class="form-group row mb-3">
                             <div class="col-md-6">
@@ -118,7 +118,12 @@
                                 <?php echo form_error('cliente_bairro', '<small class="form-text text-danger">', '</small>') ?>
 
                             </div>
-                            <div class="col-md-3">
+                             <div class="col-md-2">
+                                <label >CEP</label>
+                                <input type="text" class="form-control form-control-user cep" name="cliente_cep" value="<?php echo $cliente->cliente_cep ?>">
+                                <?php echo form_error('cliente_cep', '<small class="form-text text-danger">', '</small>') ?>
+                            </div>
+                            <div class="col-md-5">
                                 <label >Cidade</label>
                                 <input type="text" class="form-control form-control-user" name="cliente_cidade" value="<?php echo $cliente->cliente_cidade ?>">
                                 <?php echo form_error('cliente_cidade', '<small class="form-text text-danger">', '</small>') ?>
@@ -131,11 +136,6 @@
 
                             </div>
 
-                            <div class="col-md-4">
-                                <label >CEP</label>
-                                <input type="text" class="form-control form-control-user cep" name="cliente_cep" value="<?php echo $cliente->cliente_cep ?>">
-                                <?php echo form_error('cliente_cep', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
                         </div>
                     </fieldset>
 

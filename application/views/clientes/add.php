@@ -127,7 +127,12 @@
                                 <?php echo form_error('cliente_bairro', '<small class="form-text text-danger">', '</small>') ?>
 
                             </div>
-                            <div class="col-md-3">
+                             <div class="col-md-2">
+                                <label >CEP</label>
+                                <input type="text" class="form-control form-control-user cep" name="cliente_cep" value="<?php echo set_value('cliente_cep') ?>">
+                                <?php echo form_error('cliente_cep', '<small class="form-text text-danger">', '</small>') ?>
+                            </div>
+                            <div class="col-md-5">
                                 <label >Cidade</label>
                                 <input type="text" class="form-control form-control-user" name="cliente_cidade" value="<?php echo set_value('cliente_cidade') ?>">
                                 <?php echo form_error('cliente_cidade', '<small class="form-text text-danger">', '</small>') ?>
@@ -139,12 +144,7 @@
                                 <?php echo form_error('cliente_estado', '<small class="form-text text-danger">', '</small>') ?>
 
                             </div>
-
-                            <div class="col-md-4">
-                                <label >CEP</label>
-                                <input type="text" class="form-control form-control-user cep" name="cliente_cep" value="<?php echo set_value('cliente_cep') ?>">
-                                <?php echo form_error('cliente_cep', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
+                           
                         </div>
                     </fieldset>
 
