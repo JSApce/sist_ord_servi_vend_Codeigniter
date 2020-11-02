@@ -107,10 +107,6 @@ class Clientes extends CI_Controller {
                 ),
             );
 
-//                 echo '<pre>';
-//                print_r($data['cliente']);
-//                exit();
-
             $this->load->view('layout/header', $data);
             $this->load->view('clientes/add');
             $this->load->view('layout/footer');
@@ -156,29 +152,6 @@ class Clientes extends CI_Controller {
 
             if ($this->form_validation->run()) {
 
-//                Array
-//                (
-//                [cliente_nome] => Jamerson
-//                [cliente_sobrenome] => Silva
-//                [cliente_data_nascimento] => 2020-10-07
-//                [cliente_cpf] => 302.728.150-04
-//                [cliente_rg_ie] => 213
-//                [cliente_email] => dasdas@asd.ccs
-//                [cliente_telefone] => (32) 13123-1312
-//                [cliente_celular] => (12) 32132-1312
-//                [cliente_endereco] => asdadas
-//                [cliente_numero_endereco] => asdas
-//                [cliente_complemento] => asdasd
-//                [cliente_bairro] => asdas
-//                [cliente_cidade] => asd
-//                [cliente_estado] => as
-//                [cliente_cep] => 31242-423
-//                [cliente_ativo] => 1
-//                [cliente_obs] => asdasdasdas
-//                [cliente_tipo] => 1
-//                [cliente_id] => 1
-//                )
-
                 $data = elements(
                         array(
                             'cliente_nome',
@@ -222,10 +195,6 @@ class Clientes extends CI_Controller {
                     ),
                     'cliente' => $this->core_model->get_by_id('clientes', array('cliente_id' => $cliente_id)),
                 );
-
-//                 echo '<pre>';
-//                print_r($data['cliente']);
-//                exit();
 
                 $this->load->view('layout/header', $data);
                 $this->load->view('clientes/edit');
