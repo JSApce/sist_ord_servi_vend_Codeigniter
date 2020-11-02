@@ -62,10 +62,10 @@ class Vendedores extends CI_Controller {
              */
 
             $this->form_validation->set_rules('vendedor_nome_completo', 'Nome completo', 'trim|required|min_length[2]|max_length[200]');
-            $this->form_validation->set_rules('vendedor_cpf', '', 'trim|required|exact_length[18]|callback_valida_cpf');
+            $this->form_validation->set_rules('vendedor_cpf', '', 'trim|required|exact_length[14]|callback_valida_cpf');
             $this->form_validation->set_rules('vendedor_rg', 'RG', 'trim|required|max_length[20]|callback_check_rg');
             $this->form_validation->set_rules('vendedor_email', 'E-mail', 'trim|required|valid_email|max_length[50]|callback_check_email');
-            $this->form_validation->set_rules('vendedor_telefone', 'Telefone', 'trim|required|max_length[15]|callback_check_telefone');
+            $this->form_validation->set_rules('vendedor_telefone', 'Telefone', 'trim|max_length[15]|callback_check_telefone');
             $this->form_validation->set_rules('vendedor_celular', 'Celular', 'trim|required|max_length[15]|callback_check_celular');
 
             $this->form_validation->set_rules('vendedor_endereco', 'Endereço', 'trim|required|max_length[155]');
@@ -79,6 +79,7 @@ class Vendedores extends CI_Controller {
 
             if ($this->form_validation->run()) {
 
+//                exit('validado');
                 $data = elements(
                         array(
                             'vendedor_codigo',

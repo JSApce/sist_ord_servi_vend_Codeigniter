@@ -34,7 +34,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label >CPF</label>
-                                <input type="text" class="form-control form-control-user cnpj" name="vendedor_cpf" value="<?php echo $vendedor->vendedor_cpf ?>">
+                                <input type="text" class="form-control form-control-user cpf" name="vendedor_cpf" value="<?php echo $vendedor->vendedor_cpf ?>">
                                 <?php echo form_error('vendedor_cpf', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
                             <div class="col-md-3">
