@@ -14,7 +14,7 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Cadastros
+        Módulos
     </div>
     
     <!-- Nav Item - Pages Collapse Menu -->
@@ -30,6 +30,20 @@
                 <a  title="Gerenciar fornecedores" class="collapse-item" href="<?php echo base_url('fornecedores'); ?>""><i class="fas fa-user-tag text-gray-900"></i>&nbsp;&nbsp;Fornecedores</a>
                 <a  title="Gerenciar vendedores" class="collapse-item" href="<?php echo base_url('vendedores'); ?>""><i class="fas fa-user-friends text-gray-900"></i>&nbsp;&nbsp;Vendedores</a>
                 <a  title="Gerenciar serviços" class="collapse-item" href="<?php echo base_url('servicos'); ?>""><i class="fas fa-laptop text-gray-900"></i>&nbsp;&nbsp;Serviços</a>
+            </div>
+        </div>
+    </li>
+    
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+             <i class="fas fa-box-open"></i>
+            <span>Estoques</span>
+        </a>
+        <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Escolha uma opção:</h6>
+                <a title="Gerenciar marcas"  class="collapse-item" href="<?php echo base_url('marcas'); ?>"><i class="fas fa-cubes text-gray-900"></i>&nbsp;&nbsp;Marcas</a>
             </div>
         </div>
     </li>
