@@ -20,10 +20,10 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <form  class="user" method="POST" name="form_add">
-                     <?php if (isset($servico)): ?>
-                    <p><strong><i class="fas fa-clock"></i>&nbsp;&nbsp;Última alteração: </strong><?php echo formata_data_banco_com_hora($servico->servico_data_alteracao) ?></p>
+                    <?php if (isset($servico)): ?>
+                        <p><strong><i class="fas fa-clock"></i>&nbsp;&nbsp;Última alteração: </strong><?php echo formata_data_banco_com_hora($servico->servico_data_alteracao) ?></p>
                     <?php endif; ?>
-                    <fieldset class="mt-4 border p-2">
+                    <fieldset class="mt-4 mb-3 border p-2">
                         <legend class="font-small">
                             <i class="fas fa-laptop"></i>&nbsp;Dados do serviço
                         </legend>

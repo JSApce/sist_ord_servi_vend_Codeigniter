@@ -29,6 +29,38 @@ class Marcas extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
+    public function add() {
+
+        $this->form_validation->set_rules('marca_nome', '', 'trim|required|min_length[2]|max_length[45]|is_unique[marcas.marca_nome]');
+
+        if ($this->form_validation->run()) {
+
+            $data = elements(
+                    array(
+                        'marca_nome',
+                        'marca_ativa',
+                    ), $this->input->post());
+
+            $data = html_escape($data);
+
+            $this->core_model->insert('marcas', $data);
+
+            redirect('marcas');
+        } else {
+            $data = array(
+                'titulo' => 'Cadastrar marca',
+                'scripts' => array(
+                    'vendor/mask/jquery.mask.min.js',
+                    'vendor/mask/app.js',
+                ),
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('marcas/add');
+            $this->load->view('layout/footer');
+        }
+    }
+
     public function edit($marca_id = NULL) {
         if (!$marca_id || !$this->core_model->get_by_id('marcas', array('marca_id' => $marca_id))) {
             $this->session->set_flashdata('error', 'Marca não encontrada');
@@ -66,8 +98,8 @@ class Marcas extends CI_Controller {
             }
         }
     }
-    
-        public function del($marca_id = NULL) {
+
+    public function del($marca_id = NULL) {
         if (!$marca_id || !$this->core_model->get_by_id('marcas', array('marca_id' => $marca_id))) {
             $this->session->set_flashdata('error', 'Marca não encontrada');
             redirect('marcas');
