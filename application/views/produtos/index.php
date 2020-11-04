@@ -73,8 +73,8 @@
                                     <td class="text-center pr-2"><?php echo ($produto->produto_estoque_minimo >= $produto->produto_qtde_estoque ? '<span class="badge badge-warning btn-sm text-gray-900 text-light">' . $produto->produto_qtde_estoque . '</span>' : '<span class="badge badge-dark btn-sm text-light">' . $produto->produto_qtde_estoque . '</span>'); ?></td>
                                     <td class="text-center pr-4"><?php echo ($produto->produto_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning btn-sm">Não</span>' ) ?></td>
                                     <td class="text-right">
-                                        <a title="Editar" href="<?php echo base_url('produtos/edit/' . $produto->produto_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>
-                                        <a title="Excluir" href="javascript(void)" data-toggle="modal" data-target="#servico-<?php echo $produto->produto_id ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i></a>
+                                        <a title="Editar" href="<?php echo base_url('produtos/edit/' . $produto->produto_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a title="Excluir" href="javascript(void)" data-toggle="modal" data-target="#servico-<?php echo $produto->produto_id ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
 
