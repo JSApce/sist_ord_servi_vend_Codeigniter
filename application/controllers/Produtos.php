@@ -72,7 +72,31 @@ class Produtos extends CI_Controller {
 
 
             if ($this->form_validation->run()) {
-                exit('validado');
+                $data = elements(
+                    
+                    array(
+                        'produto_codigo',
+                        'produto_categoria_id',
+                        'produto_marca_id',
+                        'produto_fornecedor_id',
+                        'produto_descricao',
+                        'produto_unidade',
+                        'produto_preco_custo',
+                        'produto_preco_venda',
+                        'produto_estoque_minimo',
+                        'produto_qtde_estoque',
+                        'produto_ativo',
+                        'produto_obs',
+                    ), $this->input->post()
+                    
+                );
+                
+                $data = html_escape($data);
+                
+                $this->core_model->update('produtos', $data, array('produto_id' => $produto_id) );
+                
+                redirect('produtos');
+                
             } else {
 
                 $data = array(
