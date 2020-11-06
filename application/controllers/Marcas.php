@@ -70,6 +70,15 @@ class Marcas extends CI_Controller {
             $this->form_validation->set_rules('marca_nome', '', 'trim|required|min_length[2]|max_length[45]|callback_check_nome_marca');
 
             if ($this->form_validation->run()) {
+                
+                 $marca_ativa = $this->input->post('marca_ativa');
+
+                if ($this->db->table_exists('produtos')) {
+                    if ($marca_ativa == 0 && $this->core_model->get_by_id('produtos', array('produto_marca_id' => $marca_id, 'produto_ativo' => 1))) {
+                        $this->session->set_flashdata('error', 'Esta marca não pode ser desativada, pois está sendo utilizada em PRODUTOS');
+                        redirect('marcas');
+                    }
+                }
 
                 $data = elements(
                         array(

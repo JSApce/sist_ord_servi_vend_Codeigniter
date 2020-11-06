@@ -124,7 +124,7 @@
                         </legend>
                         <div class="form-group row mb-3">
                             <div class="col-md-3">
-                                <label >Cliente ativo</label>
+                                <label >Vendedor ativo</label>
                                 <select class="custom-select" name="vendedor_ativo">
                                     <option value="0" <?php echo $vendedor->vendedor_ativo == 0 ? 'selected' : '' ?>>Não</option>
                                     <option value="1" <?php echo $vendedor->vendedor_ativo == 1 ? 'selected' : '' ?>>Sim</option>
