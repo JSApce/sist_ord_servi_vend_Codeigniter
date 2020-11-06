@@ -31,7 +31,7 @@
 
                             <div class="col-md-3">
                                 <label >Código interno do produto</label>
-                                <input type="text" class="form-control form-control-user" name="produto_codigo" value="<?php echo $produto->produto_codigo ?> " readonly="">
+                                <input type="text" class="form-control form-control-user" name="produto_codigo" value="<?php echo $produto->produto_codigo ?>" readonly="">
                             </div>
                             <div class="col-md-9">
                                 <label >Descrição do produto</label>
@@ -69,7 +69,7 @@
                             </div>
                             <div class="col-md-3">
                                 <label >Produto unidade</label>
-                                <input type="text" class="form-control form-control-user" name="produto_unidade" value="<?php echo $produto->produto_unidade ?> ">
+                                <input type="text" class="form-control form-control-user" name="produto_unidade" value="<?php echo $produto->produto_unidade ?>">
                                 <?php echo form_error('produto_unidade', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
 
@@ -85,12 +85,12 @@
 
                             <div class="col-md-3">
                                 <label >Preço de custo</label>
-                                <input type="text" class="form-control form-control-user money" name="produto_preco_custo" value="<?php echo $produto->produto_preco_custo ?> ">
+                                <input type="text" class="form-control form-control-user money" name="produto_preco_custo" value="<?php echo $produto->produto_preco_custo ?>">
                                 <?php echo form_error('produto_preco_custo', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
                             <div class="col-md-3">
                                 <label >Preço de venda</label>
-                                <input type="text" class="form-control form-control-user money" name="produto_preco_venda" value="<?php echo $produto->produto_preco_venda ?> ">
+                                <input type="text" class="form-control form-control-user money" name="produto_preco_venda" value="<?php echo $produto->produto_preco_venda ?>">
                                 <?php echo form_error('produto_preco_venda', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
                             <div class="col-md-3">
