@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost/ordem/";
+const BASE_URL = "http://localhost/bcit/";
 
 
 $(function () {

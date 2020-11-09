@@ -11,7 +11,7 @@
 
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="<?php echo base_url('produtos') ?>">Produtos cadastrados</a></li>
+                <li class="breadcrumb-item"><a href="<?php echo base_url('pagar') ?>">Contas a pagar</a></li>
                 <li class="breadcrumb-item active" aria-current="page"><?php echo $titulo ?></li>
             </ol>
         </nav>
@@ -20,112 +20,56 @@
         <div class="card shadow mb-4">
             <div class="card-body">
                 <form  class="user" method="POST" name="form_edit">
-                    <p><strong><i class="fas fa-clock"></i>&nbsp;&nbsp;Última alteração: </strong><?php echo formata_data_banco_com_hora($produto->produto_data_alteracao) ?></p>
+                    <p><strong><i class="fas fa-clock"></i>&nbsp;&nbsp;Última alteração: </strong><?php echo formata_data_banco_com_hora($conta_pagar->conta_pagar_data_alteracao) ?></p>
 
                     <fieldset class="mt-4 border p-2">
                         <legend class="font-small">
-                            <i class="fab fa-product-hunt"></i>&nbsp;Dados do principais
+                            <i class="fas fa-money-bill-alt"></i>&nbsp;Dados da conta
                         </legend>
-
                         <div class="form-group row">
 
-                            <div class="col-md-3">
-                                <label >Código interno do produto</label>
-                                <input type="text" class="form-control form-control-user" name="produto_codigo" value="<?php echo $produto->produto_codigo ?>" readonly="">
-                            </div>
-                            <div class="col-md-9">
-                                <label >Descrição do produto</label>
-                                <input type="text" class="form-control form-control-user" name="produto_descricao" value="<?php echo $produto->produto_descricao ?>">
-                                <?php echo form_error('produto_descricao', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-3">
-                                <label >Marca</label>
-                                <select class="custom-select" name="produto_marca_id">
-                                    <?php foreach ($marcas as $marca): ?>
-                                        <option value="<?php echo $marca->marca_id ?>" <?php echo ($marca->marca_id == $produto->produto_marca_id ? 'selected' : '') ?>><?php echo $marca->marca_nome ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
-                                <label >Categoria</label>
-                                <select class="custom-select" name="produto_categoria_id">
-                                    <?php foreach ($categorias as $categoria): ?>
-                                        <option value="<?php echo $categoria->categoria_id ?>" <?php echo ($categoria->categoria_id == $produto->produto_categoria_id ? 'selected' : '') ?>> <?php echo $categoria->categoria_nome ?></option>
-                                    <?php endforeach; ?>
-                                </select>
-                            </div>
-                            <div class="col-md-3">
+                            <div class="col-md-6">
                                 <label >Fornecedor</label>
-                                <select class="custom-select" name="produto_fornecedor_id">
+                                <select class="custom-select contas_pagar" name="conta_pagar_fornecedor_id">
                                     <?php foreach ($fornecedores as $fornecedor): ?>
-                                        <option value="<?php echo $fornecedor->fornecedor_id ?>" <?php echo ($fornecedor->fornecedor_id == $produto->produto_fornecedor_id ? 'selected' : '') ?> ><?php echo $fornecedor->fornecedor_nome_fantasia ?></option>
+                                        <option value="<?php echo $fornecedor->fornecedor_id ?>" <?php echo ($fornecedor->fornecedor_id == $conta_pagar->conta_pagar_fornecedor_id ? 'selected' : '') ?> ><?php echo $fornecedor->fornecedor_nome_fantasia ?></option>
                                     <?php endforeach; ?>
                                 </select>
+                                <?php echo form_error('conta_pagar_fornecedor_id', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
-                            <div class="col-md-3">
-                                <label >Produto unidade</label>
-                                <input type="text" class="form-control form-control-user" name="produto_unidade" value="<?php echo $produto->produto_unidade ?>">
-                                <?php echo form_error('produto_unidade', '<small class="form-text text-danger">', '</small>') ?>
+                            <div class="col-md-2">
+                                <label >Data de vencimento</label>
+                                <input type="date" class="form-control form-control-user-date" name="conta_pagar_data_vencimento" value="<?php echo $conta_pagar->conta_pagar_data_vencimento ?>">
+                                <?php echo form_error('conta_pagar_data_vencimento', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
-
-                        </div>
-                    </fieldset>
-
-                    <fieldset class="mt-4 border p-2">
-                        <legend class="font-small">
-                            <i class="fas fa-funnel-dollar"></i>&nbsp;Precificação e estoque
-                        </legend>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-3">
-                                <label >Preço de custo</label>
-                                <input type="text" class="form-control form-control-user money" name="produto_preco_custo" value="<?php echo $produto->produto_preco_custo ?>">
-                                <?php echo form_error('produto_preco_custo', '<small class="form-text text-danger">', '</small>') ?>
+                            <div class="col-md-2">
+                                <label >Valor da conta</label>
+                                <input type="text" class="form-control form-control-user money2" name="conta_pagar_valor" value="<?php echo $conta_pagar->conta_pagar_valor ?>">
+                                <?php echo form_error('conta_pagar_valor', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
-                            <div class="col-md-3">
-                                <label >Preço de venda</label>
-                                <input type="text" class="form-control form-control-user money" name="produto_preco_venda" value="<?php echo $produto->produto_preco_venda ?>">
-                                <?php echo form_error('produto_preco_venda', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
-                            <div class="col-md-3">
-                                <label >Estoque mínimo</label>
-                                <input type="number" class="form-control form-control-user" name="produto_estoque_minimo" value="<?php echo $produto->produto_estoque_minimo;?>">
-                                <?php echo form_error('produto_estoque_minimo', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
-                            <div class="col-md-3">
-                                <label >Quantidade em estoque</label>
-                                <input type="number" class="form-control form-control-user" name="produto_qtde_estoque" value="<?php echo $produto->produto_qtde_estoque; ?>">
-                                <?php echo form_error('produto_qtde_estoque', '<small class="form-text text-danger">', '</small>') ?>
-                            </div>
-
-                        </div>
-
-                        <div class="form-group row">
-
-                            <div class="col-md-3">
-                                <label >Produto ativo</label>
-                                <select class="custom-select" name="produto_ativo">
-                                    <option value="0" <?php echo $produto->produto_ativo == 0 ? 'selected' : '' ?>>Não</option>
-                                    <option value="1" <?php echo $produto->produto_ativo  == 1 ? 'selected' : '' ?>>Sim</option>
+                            <div class="col-md-2">
+                                <label >Situação</label>
+                                <select class="custom-select" name="conta_pagar_status">
+                                    <option value="1" <?php echo $conta_pagar->conta_pagar_status == 1 ? 'selected' : '' ?>>Paga</option>
+                                    <option value="0" <?php echo $conta_pagar->conta_pagar_status == 0 ? 'selected' : '' ?>>Pendente</option>
                                 </select>
                             </div>
-                            <div class="col-md-9">
-                                <label >Observação</label>
-                                <textarea class="form-control form-control-user" name="produto_obs"><?php echo $produto->produto_obs ?></textarea>
-                                <?php echo form_error('produto_obs', '<small class="form-text text-danger">', '</small>') ?>
+
+                        </div>
+
+                        <div class="form-group row">
+
+                            <div class="col-md-12">
+                                <label >Observações da conta</label>
+                                <textarea class="form-control" name="conta_pagar_obs"><?php echo $conta_pagar->conta_pagar_obs ?></textarea>
+                                <?php echo form_error('conta_pagar_obs', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
 
                         </div>
                     </fieldset>
 
                     <div class="form-group row mb-3">
-                        <input type="hidden" name="produto_id" value="<?php echo $produto->produto_id ?>">
+                        <input type="hidden" name="conta_pagar_id" value="<?php echo $conta_pagar->conta_pagar_id ?>">
                     </div>
 
                     <button type="submit" class="btn btn-primary btn-sm">Salvar</button>
