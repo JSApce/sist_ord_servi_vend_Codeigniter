@@ -50,6 +50,21 @@
         </div>
     </li>
 
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <i class="fas fa-file-invoice-dollar"></i>
+            <span>Financeiro</span>
+        </a>
+        <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Escolha uma opção:</h6>
+                <a title="Gerenciar contas a pagar"  class="collapse-item" href="<?php echo base_url('pagar'); ?>"><i class="fas fa-money-bill-alt text-gray-900"></i>&nbsp;&nbsp;Contas a pagar</a>
+                <a title="Gerenciar produtos"  class="collapse-item" href="<?php echo base_url('produtos'); ?>"><i class="fab fa-product-hunt text-gray-900"></i>&nbsp;&nbsp;Produtos</a>
+                <a title="Gerenciar marcas"  class="collapse-item" href="<?php echo base_url('categorias'); ?>"><i class="fab fa-buffer text-gray-900"></i>&nbsp;&nbsp;Categorias</a>
+            </div>
+        </div>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
 
