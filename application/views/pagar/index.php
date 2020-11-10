@@ -81,7 +81,6 @@
                                     <td><?php echo ($conta->conta_pagar_status == 1 ? formata_data_banco_com_hora($conta->conta_pagar_data_pagamento) : 'Aguardando pagamento') ?></td>
                                     <td class="text-center pr-4">
                                         <?php
-                                        date_default_timezone_set('America/Sao_Paulo');
                                         if ($conta->conta_pagar_status == 1) {
                                             echo '<span class="badge badge-success btn-sm">Paga</span>';
                                         } else if (strtotime($conta->conta_pagar_data_vencimento) > strtotime(date('Y-m-d'))) {

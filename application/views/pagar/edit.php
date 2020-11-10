@@ -28,7 +28,7 @@
                         </legend>
                         <div class="form-group row">
 
-                            <div class="col-md-6">
+                            <div class="col-md-5">
                                 <label >Fornecedor</label>
                                 <select class="custom-select contas_pagar" name="conta_pagar_fornecedor_id">
                                     <?php foreach ($fornecedores as $fornecedor): ?>
@@ -37,7 +37,7 @@
                                 </select>
                                 <?php echo form_error('conta_pagar_fornecedor_id', '<small class="form-text text-danger">', '</small>') ?>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <label >Data de vencimento</label>
                                 <input type="date" class="form-control form-control-user-date" name="conta_pagar_data_vencimento" value="<?php echo $conta_pagar->conta_pagar_data_vencimento ?>">
                                 <?php echo form_error('conta_pagar_data_vencimento', '<small class="form-text text-danger">', '</small>') ?>

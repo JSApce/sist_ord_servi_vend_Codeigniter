@@ -73,9 +73,9 @@ class Produtos extends CI_Controller {
                     'vendor/mask/app.js',
                 ),
                 'produto_codigo' => $this->core_model->generate_unique_code('produtos', 'numeric', 8, 'produto_codigo'),
-                'marcas' => $this->core_model->get_all('marcas'),
-                'categorias' => $this->core_model->get_all('categorias'),
-                'fornecedores' => $this->core_model->get_all('fornecedores'),
+                'marcas' => $this->core_model->get_all('marcas', array('marca_ativa' == 1)),
+                'categorias' => $this->core_model->get_all('categorias', array('categoria_ativa' == 1)),
+                'fornecedores' => $this->core_model->get_all('fornecedores', array('fornecedor_ativo' == 1)),
             );
 
             $this->load->view('layout/header', $data);
@@ -131,9 +131,9 @@ class Produtos extends CI_Controller {
                         'vendor/mask/app.js',
                     ),
                     'produto' => $this->core_model->get_by_id('produtos', array('produto_id' => $produto_id)),
-                    'marcas' => $this->core_model->get_all('marcas'),
-                    'categorias' => $this->core_model->get_all('categorias'),
-                    'fornecedores' => $this->core_model->get_all('fornecedores'),
+                    'marcas' => $this->core_model->get_all('marcas', array('marca_ativa' == 1)),
+                    'categorias' => $this->core_model->get_all('categorias', array('categoria_ativa' == 1)),
+                    'fornecedores' => $this->core_model->get_all('fornecedores', array('fornecedor_ativo' == 1)),
                 );
 
                 $this->load->view('layout/header', $data);
@@ -159,9 +159,9 @@ class Produtos extends CI_Controller {
 
         $produto_preco_custo = $this->input->post('produto_preco_custo');
 
-        $preco_custo = str_replace( array('.', ','), '', $produto_preco_custo);
-        $preco_venda = str_replace( array('.', ','), '', $produto_preco_venda);
-        
+        $preco_custo = str_replace(array('.', ','), '', $produto_preco_custo);
+        $preco_venda = str_replace(array('.', ','), '', $produto_preco_venda);
+
         if ($preco_custo > $preco_venda) {
             $this->form_validation->set_message('check_produto_preco_venda', "Preço de venda deve ser igual ou maior que o preço de custo");
             return FALSE;
@@ -171,13 +171,14 @@ class Produtos extends CI_Controller {
     }
 
     public function del($produto_id) {
-        
-        if(!$produto_id ||  !$this->core_model->get_by_id('produtos', array('produto_id' => $produto_id))){
+
+        if (!$produto_id || !$this->core_model->get_by_id('produtos', array('produto_id' => $produto_id))) {
             $this->session->set_flashdata('error', 'Produto não encontrado');
             redirect('produtos');
-        } else{
+        } else {
             $this->core_model->delete('produtos', array('produto_id' => $produto_id));
             redirect('produtos');
         }
     }
+
 }

@@ -90,7 +90,7 @@ class Pagar extends CI_Controller {
                 $conta_pagar_status = $this->input->post('conta_pagar_status');
                 
                 if($conta_pagar_status == 1) {
-                    $data['conta_pagar_data_pagamento'] = date('Y-m-d h:i:s');
+                    $data['conta_pagar_data_pagamento'] = date('Y-m-d H:i:s');
                 }
                 
                 $data = html_escape($data);
