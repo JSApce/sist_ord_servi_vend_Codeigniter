@@ -26,7 +26,13 @@ class Pagar extends CI_Controller {
             'contas_pagar' => $this->financeiro_model->get_all_pagar(),
         );
 
-//        echo '<pre>';
+        $this->load->view('layout/header', $data);
+        $this->load->view('pagar/index');
+        $this->load->view('layout/footer');
+    }
+
+    public function add() {
+        //        echo '<pre>';
 //        print_r($data['contas_pagar']);
 //        exit();
 
@@ -42,10 +48,52 @@ class Pagar extends CI_Controller {
           [fornecedor_id] => 1
           [fornecedor] => Games true
          */
+        $this->form_validation->set_rules('conta_pagar_fornecedor_id', '', 'required');
+        $this->form_validation->set_rules('conta_pagar_data_vencimento', '', 'required');
+        $this->form_validation->set_rules('conta_pagar_valor', '', 'required');
+        $this->form_validation->set_rules('conta_pagar_obs', 'Observações', 'max_length[100]');
 
-        $this->load->view('layout/header', $data);
-        $this->load->view('pagar/index');
-        $this->load->view('layout/footer');
+        if ($this->form_validation->run()) {
+
+            $data = elements(
+                    array(
+                        'conta_pagar_fornecedor_id',
+                        'conta_pagar_data_vencimento',
+                        'conta_pagar_valor',
+                        'conta_pagar_obs',
+                        'conta_pagar_status',
+                    ),
+                    $this->input->post(),
+            );
+
+            $conta_pagar_status = $this->input->post('conta_pagar_status');
+
+            if ($conta_pagar_status == 1) {
+                $data['conta_pagar_data_pagamento'] = date('Y-m-d H:i:s');
+            }
+
+            $data = html_escape($data);
+
+            $this->core_model->insert('contas_pagar', $data);
+
+            redirect('pagar');
+        } else {
+            $data = array(
+                'titulo' => 'Cadastrar contas a pagar',
+                'styles' => array('vendor/select2/select2.min.css'),
+                'scripts' => array(
+                    'vendor/mask/jquery.mask.min.js',
+                    'vendor/mask/app.js',
+                    'vendor/select2/select2.min.js',
+                    'vendor/select2/app.js',
+                ),
+                'fornecedores' => $this->core_model->get_all('fornecedores'),
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('pagar/add');
+            $this->load->view('layout/footer');
+        }
     }
 
     public function edit($conta_pagar_id = NULL) {
@@ -53,22 +101,6 @@ class Pagar extends CI_Controller {
             $this->session->set_flashdata('error', 'conta não encontrada');
             redirect('pagar');
         } else {
-            //        echo '<pre>';
-//        print_r($data['contas_pagar']);
-//        exit();
-
-            /*
-              [conta_pagar_id] => 1
-              [conta_pagar_fornecedor_id] => 1
-              [conta_pagar_data_vencimento] => 2020-05-29
-              [conta_pagar_data_pagamento] =>
-              [conta_pagar_valor] => 800.00
-              [conta_pagar_status] => 0
-              [conta_pagar_obs] =>
-              [conta_pagar_data_alteracao] => 2020-11-08 08:38:43
-              [fornecedor_id] => 1
-              [fornecedor] => Games true
-             */
             $this->form_validation->set_rules('conta_pagar_fornecedor_id', '', 'required');
             $this->form_validation->set_rules('conta_pagar_data_vencimento', '', 'required');
             $this->form_validation->set_rules('conta_pagar_valor', '', 'required');
@@ -86,19 +118,18 @@ class Pagar extends CI_Controller {
                         ),
                         $this->input->post(),
                 );
-                
+
                 $conta_pagar_status = $this->input->post('conta_pagar_status');
-                
-                if($conta_pagar_status == 1) {
+
+                if ($conta_pagar_status == 1) {
                     $data['conta_pagar_data_pagamento'] = date('Y-m-d H:i:s');
                 }
-                
+
                 $data = html_escape($data);
-                
+
                 $this->core_model->update('contas_pagar', $data, array('conta_pagar_id' => $conta_pagar_id));
-                
+
                 redirect('pagar');
-                
             } else {
                 $data = array(
                     'titulo' => 'Contas a pagar cadastradas',
@@ -118,6 +149,24 @@ class Pagar extends CI_Controller {
                 $this->load->view('layout/footer');
             }
         }
+    }
+
+    public function del($conta_pagar_id = NULL) {
+
+        if (!$conta_pagar_id || !$this->core_model->get_by_id('contas_pagar', array('conta_pagar_id' => $conta_pagar_id))) {
+            
+            $this->session->set_flashdata('error', 'Conta não encontrada');
+            redirect('pagar');
+        }
+        
+        if ($this->core_model->get_by_id('contas_pagar', array('conta_pagar_id' => $conta_pagar_id, 'conta_pagar_status' => 0))) {
+            
+            $this->session->set_flashdata('info', 'Esta conta não pode ser excluída, pois, ainda está em aberto.');
+            redirect('pagar');
+        }
+        
+        $this->core_model->delete('contas_pagar', array('conta_pagar_id' => $conta_pagar_id));
+        redirect('pagar');
     }
 
 }
