@@ -38,17 +38,17 @@ class Receber extends CI_Controller {
 
         /*
           [conta_receber_id] => 1
-          [conta_receber_fornecedor_id] => 1
+          [conta_receber_cliente_id] => 1
           [conta_receber_data_vencimento] => 2020-05-29
           [conta_receber_data_pagamento] =>
           [conta_receber_valor] => 800.00
           [conta_receber_status] => 0
           [conta_receber_obs] =>
           [conta_receber_data_alteracao] => 2020-11-08 08:38:43
-          [fornecedor_id] => 1
+          [cliente_id] => 1
           [fornecedor] => Games true
          */
-        $this->form_validation->set_rules('conta_receber_fornecedor_id', '', 'required');
+        $this->form_validation->set_rules('conta_receber_cliente_id', '', 'required');
         $this->form_validation->set_rules('conta_receber_data_vencimento', '', 'required');
         $this->form_validation->set_rules('conta_receber_valor', '', 'required');
         $this->form_validation->set_rules('conta_receber_obs', 'Observações', 'max_length[100]');
@@ -57,7 +57,7 @@ class Receber extends CI_Controller {
 
             $data = elements(
                     array(
-                        'conta_receber_fornecedor_id',
+                        'conta_receber_cliente_id',
                         'conta_receber_data_vencimento',
                         'conta_receber_valor',
                         'conta_receber_obs',
@@ -101,7 +101,7 @@ class Receber extends CI_Controller {
             $this->session->set_flashdata('error', 'conta não encontrada');
             redirect('receber');
         } else {
-            $this->form_validation->set_rules('conta_receber_fornecedor_id', '', 'required');
+            $this->form_validation->set_rules('conta_receber_cliente_id', '', 'required');
             $this->form_validation->set_rules('conta_receber_data_vencimento', '', 'required');
             $this->form_validation->set_rules('conta_receber_valor', '', 'required');
             $this->form_validation->set_rules('conta_receber_obs', 'Observações', 'max_length[100]');
@@ -110,7 +110,7 @@ class Receber extends CI_Controller {
 
                 $data = elements(
                         array(
-                            'conta_receber_fornecedor_id',
+                            'conta_receber_cliente_id',
                             'conta_receber_data_vencimento',
                             'conta_receber_valor',
                             'conta_receber_obs',
@@ -132,7 +132,7 @@ class Receber extends CI_Controller {
                 redirect('receber');
             } else {
                 $data = array(
-                    'titulo' => 'Contas a receber cadastradas',
+                    'titulo' => 'Editar conta',
                     'styles' => array('vendor/select2/select2.min.css'),
                     'scripts' => array(
                         'vendor/mask/jquery.mask.min.js',
@@ -141,7 +141,7 @@ class Receber extends CI_Controller {
                         'vendor/select2/app.js',
                     ),
                     'conta_receber' => $this->core_model->get_by_id('contas_receber', array('conta_receber_id' => $conta_receber_id)),
-                    'fornecedores' => $this->core_model->get_all('fornecedores'),
+                    'clientes' => $this->core_model->get_all('clientes', array('clientes', 'cliente_ativo' => 1)),
                 );
 
                 $this->load->view('layout/header', $data);

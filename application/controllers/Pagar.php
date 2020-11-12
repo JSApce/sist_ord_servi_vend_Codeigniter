@@ -132,7 +132,7 @@ class Pagar extends CI_Controller {
                 redirect('pagar');
             } else {
                 $data = array(
-                    'titulo' => 'Contas a pagar cadastradas',
+                    'titulo' => 'Editar conta',
                     'styles' => array('vendor/select2/select2.min.css'),
                     'scripts' => array(
                         'vendor/mask/jquery.mask.min.js',
