@@ -32,22 +32,7 @@ class Receber extends CI_Controller {
     }
 
     public function add() {
-        //        echo '<pre>';
-//        print_r($data['contas_receber']);
-//        exit();
-
-        /*
-          [conta_receber_id] => 1
-          [conta_receber_cliente_id] => 1
-          [conta_receber_data_vencimento] => 2020-05-29
-          [conta_receber_data_pagamento] =>
-          [conta_receber_valor] => 800.00
-          [conta_receber_status] => 0
-          [conta_receber_obs] =>
-          [conta_receber_data_alteracao] => 2020-11-08 08:38:43
-          [cliente_id] => 1
-          [fornecedor] => Games true
-         */
+        
         $this->form_validation->set_rules('conta_receber_cliente_id', '', 'required');
         $this->form_validation->set_rules('conta_receber_data_vencimento', '', 'required');
         $this->form_validation->set_rules('conta_receber_valor', '', 'required');
@@ -79,7 +64,7 @@ class Receber extends CI_Controller {
             redirect('receber');
         } else {
             $data = array(
-                'titulo' => 'Cadastrar contas a receber',
+                'titulo' => 'Cadastrar conta',
                 'styles' => array('vendor/select2/select2.min.css'),
                 'scripts' => array(
                     'vendor/mask/jquery.mask.min.js',
@@ -87,7 +72,7 @@ class Receber extends CI_Controller {
                     'vendor/select2/select2.min.js',
                     'vendor/select2/app.js',
                 ),
-                'fornecedores' => $this->core_model->get_all('fornecedores'),
+               'clientes' => $this->core_model->get_all('clientes', array('clientes', 'cliente_ativo' => 1)),
             );
 
             $this->load->view('layout/header', $data);
