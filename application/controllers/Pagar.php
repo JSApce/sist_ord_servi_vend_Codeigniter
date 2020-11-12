@@ -32,22 +32,7 @@ class Pagar extends CI_Controller {
     }
 
     public function add() {
-        //        echo '<pre>';
-//        print_r($data['contas_pagar']);
-//        exit();
 
-        /*
-          [conta_pagar_id] => 1
-          [conta_pagar_fornecedor_id] => 1
-          [conta_pagar_data_vencimento] => 2020-05-29
-          [conta_pagar_data_pagamento] =>
-          [conta_pagar_valor] => 800.00
-          [conta_pagar_status] => 0
-          [conta_pagar_obs] =>
-          [conta_pagar_data_alteracao] => 2020-11-08 08:38:43
-          [fornecedor_id] => 1
-          [fornecedor] => Games true
-         */
         $this->form_validation->set_rules('conta_pagar_fornecedor_id', '', 'required');
         $this->form_validation->set_rules('conta_pagar_data_vencimento', '', 'required');
         $this->form_validation->set_rules('conta_pagar_valor', '', 'required');
