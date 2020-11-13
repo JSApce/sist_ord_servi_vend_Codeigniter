@@ -63,7 +63,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Nome da forma de pagamento</th>
+                                <th>Forma de pagamento</th>
                                 <th class="text-center">Aceita parcelamento</th>
                                 <th class="text-center">Ativa</th>
                                 <th class="text-right noSor pr-2">Ações</th>
