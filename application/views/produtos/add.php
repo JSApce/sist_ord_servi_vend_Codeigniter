@@ -74,7 +74,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset class="mt-4 border p-2">
+                    <fieldset class="mt-4 mb-3 border p-2">
                         <legend class="font-small">
                             <i class="fas fa-funnel-dollar"></i>&nbsp;Precificação e estoque
                         </legend>

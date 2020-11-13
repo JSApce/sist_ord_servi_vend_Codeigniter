@@ -55,7 +55,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a title="Cadastrar nova forma de pagamento" href="<?php echo base_url('formas_pagamentos/add') ?>" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i>&nbsp;Nova</a>
+                <a title="Cadastrar nova forma de pagamento" href="<?php echo base_url('modulo/add') ?>" class="btn btn-sm btn-success float-right"><i class="fas fa-plus"></i>&nbsp;Nova</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -83,7 +83,7 @@
                                 </tr>
 
                                 <!-- Logout Modal-->
-                            <div class="modal fade" id="servico-<?php echo $forma->forma_pagamento_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="forma-<?php echo $forma->forma_pagamento_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
