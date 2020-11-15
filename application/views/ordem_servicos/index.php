@@ -43,7 +43,7 @@
         <!-- DataTales Example -->
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <a title="Cadastrar novo serviço" href="<?php echo base_url('servicos/add') ?>" class="btn btn-sm btn-success float-right"><i class="fas fa-laptop"></i>&nbsp;Novo</a>
+                <a title="Cadastrar nova ordem de serviço" href="<?php echo base_url('os/add') ?>" class="btn btn-sm btn-success float-right"><i class="fas fa-shopping-basket"></i>&nbsp;Nova</a>
             </div>
             <div class="card-body">
                 <div class="table-responsive">
@@ -51,29 +51,31 @@
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Título serviço</th>
-                                <th>Preço</th>
-                                <th>Descrição</th>
-                                <th class="text-center">Ativo</th>
+                                <th>Data emissão</th>
+                                <th>Cliente</th>
+                                <th>Forma de pagamento</th>
+                                <th>Valor total</th>
+                                <th>Situação</th>
                                 <th class="text-right noSor pr-2">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($servicos as $servico): ?>
+                            <?php foreach ($ordens_servicos as $os): ?>
                                 <tr>
-                                    <td><?php echo $servico->servico_id ?></td>
-                                    <td><?php echo $servico->servico_nome ?></td>
-                                    <td><?php echo 'R$&nbsp;'.$servico->servico_preco ?></td>
-                                    <td><?php echo word_limiter($servico->servico_descricao, 10) ?></td>
-                                    <td class="text-center pr-4"><?php echo ($servico->servico_ativo == 1 ? '<span class="badge badge-info btn-sm">Sim</span>' : '<span class="badge badge-warning btn-sm">Não</span>' ) ?></td>
+                                    <td><?php echo $os->ordem_servico_id ?></td>
+                                    <td><?php echo formata_data_banco_com_hora($os->ordem_servico_data_emissao); ?></td>
+                                    <td><?php echo $os->cliente_nome ?></td>
+                                    <td><?php echo ($os->ordem_servico_status == 1 ? $os->ordem_servico_forma_pagamento : 'Em aberto' )  ?></td>
+                                    <td><?php echo 'R$&nbsp;' . $os->ordem_servico_valor_total ?></td>
+                                    <td class="text-center pr-4"><?php echo ($os->ordem_servico_status == 1 ? '<span class="badge badge-info btn-sm">Paga</span>' : '<span class="badge badge-warning btn-sm">Em aberto</span>' ) ?></td>
                                     <td class="text-right">
-                                        <a title="Editar" href="<?php echo base_url('servicos/edit/' . $servico->servico_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-user-edit"></i></a>
-                                        <a title="Excluir" href="javascript(void)" data-toggle="modal" data-target="#servico-<?php echo $servico->servico_id ?>" class="btn btn-sm btn-danger"><i class="fas fa-user-times"></i></a>
+                                        <a title="Editar" href="<?php echo base_url('os/edit/' . $os->ordem_servico_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a title="Excluir" href="javascript(void)" data-toggle="modal" data-target="#servico-<?php echo $os->ordem_servico_id ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>
                                
                                 <!-- Logout Modal-->
-                            <div class="modal fade" id="servico-<?php echo $servico->servico_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="servico-<?php echo $os->ordem_servico_id ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -85,7 +87,7 @@
                                         <div class="modal-body">Para excluir o registro clique em <strong>"Sim"</strong></div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Não</button>
-                                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('servicos/del/'.$servico->servico_id); ?>">Sim</a>
+                                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('os/del/'.$os->ordem_ordem_servico_id); ?>">Sim</a>
                                         </div>
                                     </div>
                                 </div>
