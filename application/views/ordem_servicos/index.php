@@ -55,7 +55,7 @@
                                 <th>Cliente</th>
                                 <th>Forma de pagamento</th>
                                 <th>Valor total</th>
-                                <th>Situação</th>
+                                <th class="text-center">Situação</th>
                                 <th class="text-right noSor pr-2">Ações</th>
                             </tr>
                         </thead>

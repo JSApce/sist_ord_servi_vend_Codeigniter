@@ -17,4 +17,24 @@ class Ordem_servicos_model extends CI_Model {
         
         return $this->db->get('ordens_servicos')->result();
      }
+     
+     public function get_all_servicos_by_ordem($ordem_servico_id = NULL) {
+         if($ordem_servico_id) {
+             $this->db->select([
+                 'ordem_tem_servicos.*',
+                 'servicos.servico_descricao',
+             ]);
+             $this->db->join('servicos', 'servico_id = ordem_ts_id_servico', 'LEFT');
+             
+             $this->db->where('ordem_ts_id_ordem_servico', $ordem_servico_id);
+             
+             return $this->db->get('ordem_tem_servicos')->result();
+         }
+     }
+     
+     public function delete_old_services($ordem_servico_id = NULL) {
+          if($ordem_servico_id) {
+              $this->db->delete('ordem_tem_servicos', array('ordem_ts_id_ordem_servico' => $ordem_servico_id));
+          }
+     }
 }
