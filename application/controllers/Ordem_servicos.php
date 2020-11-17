@@ -87,6 +87,7 @@ class Ordem_servicos extends CI_Controller {
                         'vendor/calcx/os.js',
                         'vendor/select2/select2.min.js',
                         'vendor/select2/app.js',
+                        'vendor/sweetalert2/sweetalert2.js',
                         'vendor/autocomplete/jquery-ui.js',
                     ),
                     'clientes' => $this->core_model->get_all('clientes', array('cliente_ativo' => 1)),
