@@ -32,7 +32,7 @@ if ($counter > 0) {
             /*Adiciona apenas servicos diferentes de 'undefined'*/
             if (typeof servico !== 'undefined') {
                 servicos_adicionados.push(servico);
-                console.log(servicos_adicionados);
+//                console.log(servicos_adicionados);
             }
         }
 
