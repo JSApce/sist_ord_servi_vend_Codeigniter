@@ -92,26 +92,26 @@ class Ordem_servicos extends CI_Controller {
                 );
 
                 $data['ordem_servico_valor_total'] = trim(preg_replace('/\$/', '', $ordem_servico_valor_total));
-                
+
                 $data = html_escape($data);
-                
+
                 $this->core_model->update('ordens_servicos', $data, array('ordem_servico_id' => $ordem_servico_id));
-                
+
                 $this->ordem_servicos_model->delete_old_services($ordem_servico_id);
-                
+
                 $servico_id = $this->input->post('servico_id');
                 $servico_quantidade = $this->input->post('servico_quantidade');
-                $servico_desconto = str_replace('%', '', $this->input->post('servico_desconto') );
-                $servico_preco = str_replace('R$', '', $this->input->post('servico_preco') );
-                $servico_item_total = str_replace('R$', '', trim($this->input->post('servico_item_total')) );
-                
+                $servico_desconto = str_replace('%', '', $this->input->post('servico_desconto'));
+                $servico_preco = str_replace('R$', '', $this->input->post('servico_preco'));
+                $servico_item_total = str_replace('R$', '', trim($this->input->post('servico_item_total')));
+
                 $qty_servico = count($servico_id);
-                
-                
+
+
                 $ordem_servico_id = $this->input->post('ordem_servico_id');
-                
-                for($i = 0; $i < $qty_servico; $i++){
-                    
+
+                for ($i = 0; $i < $qty_servico; $i++) {
+
                     $data = array(
                         'ordem_ts_id_ordem_servico' => $ordem_servico_id,
                         'ordem_ts_id_servico' => $servico_id[$i],
@@ -119,17 +119,15 @@ class Ordem_servicos extends CI_Controller {
                         'ordem_ts_valor_desconto' => $servico_desconto[$i],
                         'ordem_ts_valor_unitario' => $servico_preco[$i],
                         'ordem_ts_valor_total' => $servico_item_total[$i],
-                        
                     );
-                    
+
                     $data = html_escape($data);
-                    
+
                     $this->core_model->insert('ordem_tem_servicos', $data);
                 }
-                
-                
-                redirect('os');
-                
+
+
+                redirect('os/imprimir/'. $ordem_servico_id);
             } else {
                 $data = array(
                     'titulo' => 'Atualizar ordem de serviço',
@@ -158,6 +156,22 @@ class Ordem_servicos extends CI_Controller {
                 $this->load->view('ordem_servicos/edit');
                 $this->load->view('layout/footer');
             }
+        }
+    }
+
+    public function imprimir($ordem_servico_id = NULL) {
+        if (!$ordem_servico_id || !$this->core_model->get_by_id('ordens_servicos', array('ordem_servico_id' => $ordem_servico_id))) {
+            $this->session->set_flashdata('error', 'Oderm de serviço não encontrada');
+            redirect('os');
+        } else {
+            
+            $data = array(
+                'titulo' => 'Escolha uma opção',
+            );
+            
+             $this->load->view('layout/header', $data);
+                $this->load->view('ordem_servicos/imprimir');
+                $this->load->view('layout/footer');
         }
     }
 
