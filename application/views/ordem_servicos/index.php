@@ -65,7 +65,7 @@
                                     <td><?php echo $os->ordem_servico_id ?></td>
                                     <td><?php echo formata_data_banco_com_hora($os->ordem_servico_data_emissao); ?></td>
                                     <td><?php echo $os->cliente_nome ?></td>
-                                    <td><?php echo ($os->ordem_servico_status == 1 ? $os->ordem_servico_forma_pagamento : 'Em aberto' )  ?></td>
+                                    <td><?php echo ($os->ordem_servico_status == 1 ? $os->forma_pagamento : 'Em aberto' )  ?></td>
                                     <td><?php echo 'R$&nbsp;' . $os->ordem_servico_valor_total ?></td>
                                     <td class="text-center pr-4"><?php echo ($os->ordem_servico_status == 1 ? '<span class="badge badge-info btn-sm">Paga</span>' : '<span class="badge badge-warning btn-sm">Em aberto</span>' ) ?></td>
                                     <td class="text-right">
@@ -88,7 +88,7 @@
                                         <div class="modal-body">Para excluir o registro clique em <strong>"Sim"</strong></div>
                                         <div class="modal-footer">
                                             <button class="btn btn-secondary btn-sm" type="button" data-dismiss="modal">Não</button>
-                                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('os/del/'.$os->ordem_ordem_servico_id); ?>">Sim</a>
+                                            <a class="btn btn-danger btn-sm" href="<?php echo base_url('os/del/'.$os->ordem_servico_id); ?>">Sim</a>
                                         </div>
                                     </div>
                                 </div>
