@@ -265,7 +265,7 @@ class Ordem_servicos extends CI_Controller {
 
     public function imprimir($ordem_servico_id = NULL) {
         if (!$ordem_servico_id || !$this->core_model->get_by_id('ordens_servicos', array('ordem_servico_id' => $ordem_servico_id))) {
-            $this->session->set_flashdata('error', 'Oderm de serviço não encontrada');
+            $this->session->set_flashdata('error', 'Ordem de serviço não encontrada');
             redirect('os');
         } else {
 
