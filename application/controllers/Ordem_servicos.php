@@ -288,9 +288,6 @@ class Ordem_servicos extends CI_Controller {
         } else {
             $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-//            echo '<pre>';
-//            print_r($empresa);
-//            exit();
 
             $ordem_servico = $this->ordem_servicos_model->get_by_id($ordem_servico_id);
 //            echo '<pre>';

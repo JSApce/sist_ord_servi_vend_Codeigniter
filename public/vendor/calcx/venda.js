@@ -119,7 +119,7 @@ $(document).ready(function () {
                 /*Início bloco que verifica se a quantidade inputada é maior que a disponibilidade em estoque*/
                 $("input.qty").keyup(function () {
 
-                    if ($(this).val() > produto_qtde_estoque) {
+                    if (parseInt($(this).val()) > parseInt(produto_qtde_estoque)) {
 
                         Swal.fire({
                             icon: 'warning',
@@ -149,7 +149,7 @@ $(document).ready(function () {
     /*Realiza o cáuculo da venda antes de cadastrá-la*/
     $('#btn-cadastrar-venda').on('click', function () {
         $form.calx('calculate');
-        $form.calx('getCell', 'G1').calculate();
+        $form.calx('getCell', 'G2').calculate();
     });
 
 });

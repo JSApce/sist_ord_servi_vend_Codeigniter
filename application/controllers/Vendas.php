@@ -32,6 +32,105 @@ class Vendas extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
+    public function add() {
+
+        $this->form_validation->set_rules('venda_cliente_id', '', 'required');
+        $this->form_validation->set_rules('venda_tipo', '', 'required');
+        $this->form_validation->set_rules('venda_forma_pagamento_id', '', 'required');
+        $this->form_validation->set_rules('venda_vendedor_id', '', 'required');
+
+        if ($this->form_validation->run()) {
+
+            $venda_valor_total = str_replace('R$', "", trim($this->input->post('venda_valor_total')));
+
+            $data = elements(
+                    array(
+                        'venda_cliente_id',
+                        'venda_forma_pagamento_id',
+                        'venda_tipo',
+                        'venda_vendedor_id',
+                        'venda_valor_desconto',
+                        'venda_valor_total',
+                    ), $this->input->post()
+            );
+
+            $data['venda_valor_total'] = trim(preg_replace('/\$/', '', $venda_valor_total));
+
+            $data = html_escape($data);
+
+            $this->core_model->insert('vendas', $data, TRUE);
+
+            $id_venda = $this->session->userdata('last_id');
+
+            $produto_id = $this->input->post('produto_id');
+            $produto_quantidade = $this->input->post('produto_quantidade');
+            $produto_desconto = str_replace('%', '', $this->input->post('produto_desconto'));
+
+            $produto_preco_venda = str_replace('R$', '', $this->input->post('produto_preco_venda'));
+            $produto_item_total = str_replace('R$', '', $this->input->post('produto_item_total'));
+
+            $produto_preco_venda = str_replace(',', '', $produto_preco_venda);
+            $produto_item_total = str_replace(',', '', $produto_item_total);
+
+            $qty_produto = count($produto_id);
+
+
+            for ($i = 0; $i < $qty_produto; $i++) {
+
+                $data = array(
+                    'venda_produto_id_venda' => $id_venda,
+                    'venda_produto_id_produto' => $produto_id[$i],
+                    'venda_produto_quantidade' => $produto_quantidade[$i],
+                    'venda_produto_valor_unitario' => $produto_preco_venda[$i],
+                    'venda_produto_desconto' => $produto_desconto[$i],
+                    'venda_produto_valor_total' => $produto_item_total[$i],
+                );
+
+                $data = html_escape($data);
+
+                $this->core_model->insert('venda_produtos', $data);
+
+                /* Inicio atualização estoque */
+                $produto_qtde_estoque = 0;
+                $produto_qtde_estoque += intval($produto_quantidade[$i]);
+
+                $produtos = array(
+                    'produto_qtde_estoque' => $produto_qtde_estoque,
+                );
+                $this->produtos_model->update($produto_id[$i], $produto_qtde_estoque);
+                /* Fim atualização estoque */
+            } //fim foreach
+            
+            redirect('vendas/imprimir/' . $id_venda);
+        } else {
+            $data = array(
+                'titulo' => 'Cadastrar venda',
+                'styles' => array(
+                    'vendor/select2/select2.min.css',
+                    'vendor/autocomplete/jquery-ui.css',
+                    'vendor/autocomplete/estilo.css',
+                ),
+                'scripts' => array(
+                    'vendor/autocomplete/jquery-migrate.js',
+                    'vendor/calcx/jquery-calx-sample-2.2.8.min.js',
+                    'vendor/calcx/venda.js',
+                    'vendor/select2/select2.min.js',
+                    'vendor/select2/app.js',
+                    'vendor/sweetalert2/sweetalert2.js',
+                    'vendor/autocomplete/jquery-ui.js',
+                ),
+                'clientes' => $this->core_model->get_all('clientes', array('cliente_ativo' => 1)),
+                'formas_pagamentos' => $this->core_model->get_all('formas_pagamentos', array('forma_pagamento_ativa' => 1)),
+                'vendedores' => $this->core_model->get_all('vendedores', array('vendedor_ativo' => 1)),
+            );
+
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('vendas/add');
+            $this->load->view('layout/footer');
+        }
+    }
+
     public function edit($venda_id = NULL) {
         if (!$venda_id || !$this->core_model->get_by_id('vendas', array('venda_id' => $venda_id))) {
             $this->session->set_flashdata('error', 'Venda não encontrada');
@@ -153,6 +252,33 @@ class Vendas extends CI_Controller {
                 $this->load->view('vendas/edit');
                 $this->load->view('layout/footer');
             }
+        }
+    }
+
+    public function del($venda_id = NULL) {
+        if (!$venda_id || !$this->core_model->get_by_id('vendas', array('venda_id' => $venda_id))) {
+            $this->session->set_flashdata('error', 'Venda não encontrada');
+            redirect('vendas');
+        } else {
+            $this->core_model->delete('vendas', array('venda_id' => $venda_id));
+            redirect('vendas');
+        }
+    }
+
+    public function imprimir($venda_id = NULL) {
+        if (!$venda_id || !$this->core_model->get_by_id('vendas', array('venda_id' => $venda_id))) {
+            $this->session->set_flashdata('error', 'Venda não encontrada');
+            redirect('vendas');
+        } else {
+
+            $data = array(
+                'titulo' => 'Escolha uma opção',
+                'venda' => $this->core_model->get_by_id('vendas', array('venda_id' => $venda_id)),
+            );
+
+            $this->load->view('layout/header', $data);
+            $this->load->view('vendas/imprimir');
+            $this->load->view('layout/footer');
         }
     }
 

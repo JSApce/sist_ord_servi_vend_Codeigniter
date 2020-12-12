@@ -15,6 +15,7 @@ class Vendas_model extends CI_Model {
             'formas_pagamentos.forma_pagamento_id',
             'formas_pagamentos.forma_pagamento_nome as forma_pagamento',
         ]);
+        $this->db->where('venda_id', $venda_id);
         $this->db->join('clientes', 'cliente_id = venda_cliente_id', 'LEFT');
         $this->db->join('vendedores', 'vendedor_id = venda_vendedor_id', 'LEFT');
         $this->db->join('formas_pagamentos', 'forma_pagamento_id = venda_forma_pagamento_id', 'LEFT');
