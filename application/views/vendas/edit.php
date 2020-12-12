@@ -27,7 +27,7 @@
 
                         <div class="form-group row">
                             <div class="ui-widget col-lg-12 mb-1 mt-1">
-                                <input autofocus id="buscar_produtos" class="search form-control form-control-lg col-lg-12" placeholder="Que produto você está buscando?">
+                                <input id="buscar_produtos" class="search form-control form-control-lg col-lg-12" placeholder="Que produto você está buscando?">
                             </div>
                         </div>
 

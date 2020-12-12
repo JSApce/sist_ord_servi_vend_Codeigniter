@@ -13,6 +13,7 @@ class Vendas extends CI_Controller {
         }
 
         $this->load->model('vendas_model');
+        $this->load->model('produtos_model');
     }
 
     public function index() {
@@ -24,26 +25,28 @@ class Vendas extends CI_Controller {
                 'vendor/datatables/app.js',
             ),
             'vendas' => $this->vendas_model->get_all(),
-            
         );
 
         $this->load->view('layout/header', $data);
         $this->load->view('vendas/index');
         $this->load->view('layout/footer');
     }
-    
-      public function edit($venda_id = NULL) {
+
+    public function edit($venda_id = NULL) {
         if (!$venda_id || !$this->core_model->get_by_id('vendas', array('venda_id' => $venda_id))) {
             $this->session->set_flashdata('error', 'Venda não encontrada');
             redirect('vendas');
         } else {
-            
-//            $venda_produtos = $this->vendas_model->get_all_produtos_by_venda($venda_id);
+
+            //Atualização de estoque
+//            $venda_produtos = $data['venda_produtos'] = $this->vendas_model->get_all_produtos_by_venda($venda_id);
+
 
             $this->form_validation->set_rules('venda_cliente_id', '', 'required');
             $this->form_validation->set_rules('venda_tipo', '', 'required');
             $this->form_validation->set_rules('venda_forma_pagamento_id', '', 'required');
-            
+            $this->form_validation->set_rules('venda_vendedor_id', '', 'required');
+
 
 
 //            $this->form_validation->set_rules('venda_equipamento', 'Equipamento', 'trim|required|min_length[2]|max_length[80]');
@@ -80,7 +83,7 @@ class Vendas extends CI_Controller {
                 $produto_quantidade = $this->input->post('produto_quantidade');
                 $produto_desconto = str_replace('%', '', $this->input->post('produto_desconto'));
 
-                $produto_preco_venda = str_replace('R$', '', $this->input->post('produto_preco'));
+                $produto_preco_venda = str_replace('R$', '', $this->input->post('produto_preco_venda'));
                 $produto_item_total = str_replace('R$', '', $this->input->post('produto_item_total'));
 
                 $produto_preco_venda = str_replace(',', '', $produto_preco_venda);
@@ -88,7 +91,6 @@ class Vendas extends CI_Controller {
 
                 $qty_produto = count($produto_id);
 
-//                $venda_id = $this->input->post('venda_id');
 
                 for ($i = 0; $i < $qty_produto; $i++) {
 
@@ -97,18 +99,30 @@ class Vendas extends CI_Controller {
                         'venda_produto_id_produto' => $produto_id[$i],
                         'venda_produto_quantidade' => $produto_quantidade[$i],
                         'venda_produto_valor_unitario' => $produto_preco_venda[$i],
-                        'venda_produto_valor_desconto' => $produto_desconto[$i],
+                        'venda_produto_desconto' => $produto_desconto[$i],
                         'venda_produto_valor_total' => $produto_item_total[$i],
                     );
 
                     $data = html_escape($data);
 
                     $this->core_model->insert('venda_produtos', $data);
-                }
 
-
+                    /* Inicio atualização estoque */
+//                    foreach ($venda_produtos as $venda_p) {
+//                        if ($venda_p->venda_produto_quantudade < $produto_quantidade[$i]) {
+//                            $produto_qtde_estoque = 0;
+//
+//                            $produto_qtde_estoque += intval($produto_quantidade[$i]);
+//
+//                            $diferenca = ($produto_qtde_estoque - $venda_p->venda_produto_quantudade);
+//
+//                            $this->produtos_model->update($produto_id[$i], $diferenca);
+//                        }
+//                    }
+                    /* Fim atualização estoque */
+                } //fim foreach
 //                redirect('vendas/imprimir/' . $venda_id);
-                 redirect('vendas');
+                redirect('vendas');
             } else {
                 $data = array(
                     'titulo' => 'Atualizar venda',
@@ -131,11 +145,8 @@ class Vendas extends CI_Controller {
                     'vendedores' => $this->core_model->get_all('vendedores', array('vendedor_ativo' => 1)),
                     'venda' => $this->vendas_model->get_by_id($venda_id),
                     'venda_produtos' => $this->vendas_model->get_all_produtos_by_venda($venda_id),
-                    'desabilitar' => TRUE, 
+                    'desabilitar' => TRUE,
                 );
-
-//                $venda = $data['venda'] = $this->vendas_model->get_by_id($venda_id);
-
 
 
                 $this->load->view('layout/header', $data);
@@ -145,6 +156,4 @@ class Vendas extends CI_Controller {
         }
     }
 
-    
 }
-
