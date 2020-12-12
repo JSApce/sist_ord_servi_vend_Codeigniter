@@ -70,7 +70,7 @@
                                     <td class="text-center pr-4"><?php echo ($os->ordem_servico_status == 1 ? '<span class="badge badge-info btn-sm">Paga</span>' : '<span class="badge badge-warning btn-sm">Em aberto</span>' ) ?></td>
                                     <td class="text-right">
                                         <a title="Imprimir" href="<?php echo base_url('os/pdf/' . $os->ordem_servico_id); ?>" class="btn btn-sm btn-dark"><i class="fas fa-print"></i></a>
-                                        <a title="Editar" href="<?php echo base_url('os/edit/' . $os->ordem_servico_id); ?>" class="btn btn-sm btn-primary"><i class="fas fa-edit"></i></a>
+                                        <a title="<?php echo ($os->ordem_servico_status == 1 ? 'Visualizar' : 'Editar'); ?>" href="<?php echo base_url('os/edit/' . $os->ordem_servico_id); ?>" class="btn btn-sm btn-primary"><i class="<?php echo ($os->ordem_servico_status == 1 ? 'fas fa-eye' : 'fas fa-edit'); ?>"></i></a>
                                         <a title="Excluir" href="javascript(void)" data-toggle="modal" data-target="#servico-<?php echo $os->ordem_servico_id ?>" class="btn btn-sm btn-danger"><i class="fas fa-trash"></i></a>
                                     </td>
                                 </tr>

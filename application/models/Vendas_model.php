@@ -10,6 +10,8 @@ class Vendas_model extends CI_Model {
             'vendas.*',
             'clientes.cliente_id',
             'CONCAT(clientes.cliente_nome," ", clientes.cliente_sobrenome) as cliente_nome_completo',
+            'clientes.cliente_cpf_cnpj',
+            'clientes.cliente_celular',
             'vendedores.vendedor_id',
             'vendedores.vendedor_nome_completo',
             'formas_pagamentos.forma_pagamento_id',
@@ -39,8 +41,8 @@ class Vendas_model extends CI_Model {
 
         return $this->db->get('vendas')->result();
     }
-    
-     public function get_all_produtos($venda_id = NULL) {
+
+    public function get_all_produtos($venda_id = NULL) {
         if ($venda_id) {
             $this->db->select([
                 'venda_produtos.*',
@@ -48,6 +50,7 @@ class Vendas_model extends CI_Model {
                 'FORMAT(SUM(REPLACE(venda_produto_valor_total, ",", "")),2) as venda_produto_valor_total',
                 'FORMAT(SUM(REPLACE(venda_produto_valor_total, ",", "")),2) as venda_valor_total',
                 'produtos.produto_id',
+                'produtos.produto_codigo',
                 'produtos.produto_descricao',
             ]);
             $this->db->join('produtos', 'produto_id = venda_produto_id_produto', 'LEFT');
@@ -72,8 +75,8 @@ class Vendas_model extends CI_Model {
             return $this->db->get('venda_produtos')->result();
         }
     }
-    
-     public function get_valor_final_venda($venda_id = NULL) {
+
+    public function get_valor_final_venda($venda_id = NULL) {
         if ($venda_id) {
             $this->db->select([
                 'FORMAT(SUM(REPLACE(venda_produto_valor_total, ",", "")),2) as venda_valor_total',
@@ -90,6 +93,5 @@ class Vendas_model extends CI_Model {
             $this->db->delete('venda_produtos', array('venda_produto_id_venda' => $venda_id));
         }
     }
-
 
 }

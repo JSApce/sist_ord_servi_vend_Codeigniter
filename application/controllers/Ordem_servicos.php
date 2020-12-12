@@ -341,8 +341,9 @@ class Ordem_servicos extends CI_Controller {
 
             $html .= '<tr>';
 
+            $html .= '<th>Item</th>';
             $html .= '<th>Serviço</th>';
-            $html .= '<th>Quantidade</th>';
+            $html .= '<th style="text-align: center;">Quantidade</th>';
             $html .= '<th>Valor unitário</th>';
             $html .= '<th>Desconto</th>';
             $html .= '<th>Valor total</th>';
@@ -355,11 +356,12 @@ class Ordem_servicos extends CI_Controller {
 
             $valor_final_os = $this->ordem_servicos_model->get_valor_final_os($ordem_servico_id);
 
-            foreach ($servicos_ordem as $servico):
+            foreach ($servicos_ordem as $key => $servico):
 
                 $html .= '<tr>';
+                $html .= '<td>' . intval($key + 1) . '</td>';
                 $html .= '<td>' . $servico->servico_nome . '</td>';
-                $html .= '<td>' . $servico->ordem_ts_quantidade . '</td>';
+                $html .= '<td style="text-align: center;">' . $servico->ordem_ts_quantidade . '</td>';
                 $html .= '<td>' . 'R$&nbsp;' . $servico->ordem_ts_valor_unitario . '</td>';
                 $html .= '<td>' . '%&nbsp;' . $servico->ordem_ts_valor_desconto . '</td>';
                 $html .= '<td>' . 'R$&nbsp;' . $servico->ordem_ts_valor_total . '</td>';
@@ -367,7 +369,7 @@ class Ordem_servicos extends CI_Controller {
 
             endforeach;
 
-            $html .= '<th colspan="3">';
+            $html .= '<th colspan="4">';
 
             $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
             $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_os->os_valor_total . '</td>';
@@ -388,73 +390,4 @@ class Ordem_servicos extends CI_Controller {
         }
     }
 
-    /*
-      stdClass Object
-      (
-      [ordem_servico_id] => 1
-      [ordem_servico_forma_pagamento_id] => 1
-      [ordem_servico_cliente_id] => 1
-      [ordem_servico_data_emissao] => 2020-02-14 17:30:35
-      [ordem_servico_data_conclusao] =>
-      [ordem_servico_equipamento] => Fone de ouvido
-      [ordem_servico_marca_equipamento] => Awell
-      [ordem_servico_modelo_equipamento] => AV1801
-      [ordem_servico_acessorios] => Mouse e carregador
-      [ordem_servico_defeito] => Não sai aúdio no lado esquerdo
-      [ordem_servico_valor_desconto] => R$ 8.00
-      [ordem_servico_valor_total] => 632.00
-      [ordem_servico_status] => 0
-      [ordem_servico_obs] =>
-      [ordem_servico_data_alteracao] => 2020-11-21 22:17:40
-      [cliente_id] => 1
-      [cliente_cpf_cnpj] => 366.293.560-04
-      [cliente_nome_completo] => miria fulano da silva
-      [forma_pagamento_id] => 1
-      [forma_pagamento] => Cartão de crédito
-      )
-     */
-
-    /*
-      stdClass Object
-      (
-      [sistema_id] => 1
-      [sistema_razao_social] => System bcit INC
-      [sistema_nome_fantasia] => Sistema natação now
-      [sistema_cnpj] => 56.565.646/4435-43
-      [sistema_ie] =>
-      [sistema_telefone_fixo] => (23) 42314-4123
-      [sistema_telefone_movel] => (98) 88888-8888
-      [sistema_email] => jamerson.developer@gmail.com
-      [sistema_site_url] =>
-      [sistema_cep] => 65556-565
-      [sistema_endereco] => Rua da natação,
-      [sistema_numero] => 123
-      [sistema_cidade] => São Luís
-      [sistema_estado] => MA
-      [sistema_txt_ordem_servico] => Serviços de qualidade
-      [sistema_data_alteracao] => 2020-12-03 18:58:48
-      )
-     */
-
-    /*
-      [ordem_servico_id] => 1
-      [ordem_servico_forma_pagamento_id] => 1
-      [ordem_servico_cliente_id] => 1
-      [ordem_servico_data_emissao] => 2020-02-14 17:30:35
-      [ordem_servico_data_conclusao] =>
-      [ordem_servico_equipamento] => Fone de ouvido
-      [ordem_servico_marca_equipamento] => Awell
-      [ordem_servico_modelo_equipamento] => AV1801
-      [ordem_servico_acessorios] => Mouse e carregador
-      [ordem_servico_defeito] => Não sai aúdio no lado esquerdo
-      [ordem_servico_valor_desconto] => R$ 0.00
-      [ordem_servico_valor_total] => 490.00
-      [ordem_servico_status] => 0
-      [ordem_servico_obs] =>
-      [ordem_servico_data_alteracao] => 2020-02-19 22:58:42
-      [cliente_id] => 1
-      [cliente_nome] => miria
-      [forma_pagamento_id] => 1
-      [forma_pagamento] => Cartão de crédito
-     */
-}
+   }

@@ -100,7 +100,7 @@ class Vendas extends CI_Controller {
                 $this->produtos_model->update($produto_id[$i], $produto_qtde_estoque);
                 /* Fim atualização estoque */
             } //fim foreach
-            
+
             redirect('vendas/imprimir/' . $id_venda);
         } else {
             $data = array(
@@ -279,6 +279,109 @@ class Vendas extends CI_Controller {
             $this->load->view('layout/header', $data);
             $this->load->view('vendas/imprimir');
             $this->load->view('layout/footer');
+        }
+    }
+
+    public function pdf($venda_id = NULL) {
+        if (!$venda_id || !$this->core_model->get_by_id('vendas', array('venda_id' => $venda_id))) {
+
+            $this->session->set_flashdata('error', 'Venda não encontrada');
+            redirect('vendas');
+        } else {
+            $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+
+
+            $venda = $this->vendas_model->get_by_id($venda_id);
+
+            $file_name = 'Venda Nº' . $venda->venda_id;
+
+            //Inicio do HTML
+            $html = '<html>';
+
+            $html .= '<head>';
+            $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Impressão de venda</title>';
+
+
+
+            $html .= '</head>';
+
+            $html .= '<body style="font-size:12px">';
+
+            $html .= '<h4 align="center">
+                ' . $empresa->sistema_razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
+                ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
+                ' . 'CEP: ' . $empresa->sistema_cep . ',&nbsp;' . $empresa->sistema_cidade . ',&nbsp;' . $empresa->sistema_estado . '<br/>
+                ' . 'Telefone: ' . $empresa->sistema_telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
+                </h4>';
+
+            $html .= '<hr>';
+
+
+            //Dados do cliente
+
+            $html .= '<p align="right" style="font-size: 12px">Venda Nº&nbsp;' . $venda->venda_id . '</p>';
+
+            $html .= '<p>'
+                    . '<strong>Cliente: </strong>' . $venda->cliente_nome_completo . '<br/>'
+                    . '<strong>CPF: </strong>' . $venda->cliente_cpf_cnpj . '<br/>'
+                    . '<strong>Celular: </strong>' . $venda->cliente_celular . '<br/>'
+                    . '<strong>Data de emissão: </strong>' . formata_data_banco_com_hora($venda->venda_data_emissao) . '<br/>'
+                    . '<strong>Forma de pagamento: </strong>' . $venda->forma_pagamento . '<br/>'
+                    . '</p>';
+
+
+            $html .= '<hr>';
+
+            //Dados da ordem
+
+            $html .= '<table width="100%" border: solid #ddd 1px>';
+
+            $html .= '<tr>';
+
+            $html .= '<th>Código</th>';
+            $html .= '<th>Descrição</th>';
+            $html .= '<th style="text-align: center;">Quantidade</th>';
+            $html .= '<th>Valor unitário</th>';
+            $html .= '<th>Desconto</th>';
+            $html .= '<th>Valor total</th>';
+
+            $html .= '</tr>';
+
+//            $venda_id = $venda->venda_id;
+
+            $produtos_venda = $this->vendas_model->get_all_produtos($venda_id);
+
+            $valor_final_venda = $this->vendas_model->get_valor_final_venda($venda_id);
+
+            foreach ($produtos_venda as $produto):
+
+                $html .= '<tr>';
+                $html .= '<td>' . $produto->produto_codigo . '</td>';
+                $html .= '<td>' . $produto->produto_descricao . '</td>';
+                $html .= '<td style="text-align: center;">' . $produto->venda_produto_quantidade . '</td>';
+                $html .= '<td>' . 'R$&nbsp;' . $produto->venda_produto_valor_unitario . '</td>';
+                $html .= '<td>' . '%&nbsp;' . $produto->venda_produto_desconto . '</td>';
+                $html .= '<td>' . 'R$&nbsp;' . $produto->venda_produto_valor_total . '</td>';
+                $html .= '</tr>';
+
+            endforeach;
+
+            $html .= '<th colspan="4">';
+
+            $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+            $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_venda->venda_valor_total . '</td>';
+
+            $html .= '</th>';
+
+            $html .= '</table>';
+
+            $html .= '</body>';
+
+            $html .= '<html>';
+
+            $this->pdf->createPDF($html, $file_name, FALSE);
         }
     }
 

@@ -15,7 +15,7 @@ $counter = $('table.table').find('tbody').children().length;
 /*Caso o $counter seja maior que zero, significa que já existem servicos na venda*/
 if ($counter > 0) {
 
-    console.log('É maior');
+//    console.log('É maior');
 
     /*Recupera através do loop todos os servicos do input 'produto_descricao'*/
     $('#table_servicos tr').each(function () {
@@ -135,7 +135,7 @@ $(document).ready(function () {
     /*Refaz o cálculo da ordem antes de cadastrá-la*/
     $('#btn-cadastrar-venda').on('click', function () {
         $form.calx('calculate');
-        $form.calx('getCell', 'G1').calculate();
+        $form.calx('getCell', 'G2').calculate();
     });
 
 });
