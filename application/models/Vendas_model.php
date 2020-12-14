@@ -42,6 +42,8 @@ class Vendas_model extends CI_Model {
         return $this->db->get('vendas')->result();
     }
 
+    /* Utilizado na impressão do pdf */
+
     public function get_all_produtos($venda_id = NULL) {
         if ($venda_id) {
             $this->db->select([
@@ -92,6 +94,47 @@ class Vendas_model extends CI_Model {
         if ($venda_id) {
             $this->db->delete('venda_produtos', array('venda_produto_id_venda' => $venda_id));
         }
+    }
+
+    /* Utilizados no relatŕoio de vendas */
+    public function gerar_realtorio_vendas($data_inicial = NULL, $data_final = NULL) {
+        $this->db->select([
+            'vendas.*',
+            'clientes.cliente_id',
+            'CONCAT(clientes.cliente_nome," ", clientes.cliente_sobrenome) as cliente_nome_completo',
+            'formas_pagamentos.forma_pagamento_id',
+            'formas_pagamentos.forma_pagamento_nome as forma_pagamento',
+        ]);
+        $this->db->join('clientes', 'cliente_id = venda_cliente_id', 'LEFT');
+        $this->db->join('formas_pagamentos', 'forma_pagamento_id = venda_forma_pagamento_id', 'LEFT');
+
+        if ($data_inicial && $data_final) {
+            
+            $this->db->where("SUBSTR(venda_data_emissao, 1, 10) >= '$data_inicial' AND  SUBSTR(venda_data_emissao, 1, 10) <= '$data_final'");
+        
+            
+        } else {
+            $this->db->where("SUBSTR(venda_data_emissao, 1, 10) >= '$data_inicial'");
+        }
+        
+        return $this->db->get('vendas')->result();
+    }
+    
+     public function gerar_valor_final_realtorio($data_inicial = NULL, $data_final = NULL) {
+        $this->db->select([
+            'FORMAT(SUM(REPLACE(venda_valor_total, ",", "")),2) as venda_valor_total',
+        ]);
+        
+        if ($data_inicial && $data_final) {
+            
+            $this->db->where("SUBSTR(venda_data_emissao, 1, 10) >= '$data_inicial' AND  SUBSTR(venda_data_emissao, 1, 10) <= '$data_final'");
+        
+            
+        } else {
+            $this->db->where("SUBSTR(venda_data_emissao, 1, 10) >= '$data_inicial'");
+        }
+        
+        return $this->db->get('vendas')->row();
     }
 
 }
