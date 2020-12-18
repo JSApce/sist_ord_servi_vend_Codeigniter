@@ -13,6 +13,122 @@ class Relatorios extends CI_Controller {
         }
     }
 
+     public function os() {
+
+        $data = array(
+            'titulo' => 'Relatório de ordens de serviços',
+        );
+
+        $data_inicial = $this->input->post('data_inicial');
+
+        $data_final = $this->input->post('data_final');
+
+        if ($data_inicial) {
+            $this->load->model('ordem_servicos_model');
+
+            if ($this->ordem_servicos_model->gerar_relatorio_os($data_inicial, $data_final)) {
+
+                //montar o pdf
+                $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+
+                $ordens_servicos = $this->ordem_servicos_model->gerar_relatorio_os($data_inicial, $data_final);
+
+                $file_name = 'Relatótio de ordens de serviços';
+
+                //Inicio do HTML
+                $html = '<html>';
+
+                $html .= '<head>';
+                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de ordens de serviços</title>';
+
+                $html .= '</head>';
+
+                $html .= '<body style="font-size:12px">';
+
+                $html .= '<h4 align="center">
+                ' . $empresa->sistema_razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
+                ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
+                ' . 'CEP: ' . $empresa->sistema_cep . ',&nbsp;' . $empresa->sistema_cidade . ',&nbsp;' . $empresa->sistema_estado . '<br/>
+                ' . 'Telefone: ' . $empresa->sistema_telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
+                </h4>';
+
+                $html .= '<hr>';
+                //Dados da os
+
+                if ($data_inicial && $data_final) {
+                    $html .= '<p align="center" style="font-size: 12px">Relatório de ordens de serviços realizadas entre as datas </p>';
+                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . ' - ' . formata_data_banco_sem_hora($data_final) . '</p>';
+                } else {
+                    $html .= '<p align="center" style="font-size: 12px">Relatório de ordens de serviços realizadas a partir da data </p>';
+                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . '</p>';
+                }
+
+                $html .= '<hr>';
+
+                //Dados da ordem
+
+                $html .= '<table width="100%" border: solid #ddd 1px>';
+
+                $html .= '<tr>';
+
+                $html .= '<th>Ordem ID</th>';
+                $html .= '<th>Data</th>';
+                $html .= '<th>Cliente</th>';
+                $html .= '<th>Forma pagamento</th>';
+                $html .= '<th>Valor total</th>';
+
+                $html .= '</tr>';
+
+                $valor_final_os = $this->ordem_servicos_model->gerar_valor_final_relatorio_os($data_inicial, $data_final);
+
+                foreach ($ordens_servicos as $os):
+
+                    $html .= '<tr>';
+                    $html .= '<td>' . $os->ordem_servico_id . '</td>';
+                    $html .= '<td>' . formata_data_banco_com_hora($os->ordem_servico_data_emissao) . '</td>';
+                    $html .= '<td>' . $os->cliente_nome_completo . '</td>';
+                    $html .= '<td>' . $os->forma_pagamento . '</td>';
+                    $html .= '<td>' . 'R$&nbsp;' . $os->ordem_servico_valor_total . '</td>';
+                    $html .= '</tr>';
+
+                endforeach;
+
+                $html .= '<th colspan="3">';
+
+                $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_os->ordem_servico_valor_total . '</td>';
+
+                $html .= '</th>';
+
+                $html .= '</table>';
+
+                $html .= '</body>';
+
+                $html .= '<html>';
+
+
+                $this->pdf->createPDF($html, $file_name, FALSE);
+            } else {
+
+                if (!empty($data_inicial) && !empty($data_final)) {
+
+                    $this->session->set_flashdata('info', 'Não foram encontradas ordens de serviços entre as datas ' . formata_data_banco_sem_hora($data_inicial) . '&nbsp;e&nbsp;' . formata_data_banco_sem_hora($data_final));
+                } else {
+                    $this->session->set_flashdata('info', 'Não foram encontradas ordens de serviços a partir da data ' . formata_data_banco_sem_hora($data_inicial));
+                }
+
+                redirect('relatorios/os');
+            }
+        }
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('relatorios/os');
+        $this->load->view('layout/footer');
+    }
+    
+    
     public function vendas() {
 
         $data = array(
@@ -22,8 +138,8 @@ class Relatorios extends CI_Controller {
         $data_inicial = $this->input->post('data_inicial');
 
         $data_final = $this->input->post('data_final');
-        
-        
+
+
 //        echo '<pre>';
 //        print_r($this->input->post());
 //        exit();
@@ -65,11 +181,11 @@ class Relatorios extends CI_Controller {
 
                 //Dados da venda
 
-                $html .= '<p style="font-size: 12px">Relatório de vendas realizado no período de </p>';
-
                 if ($data_inicial && $data_final) {
-                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . ' - ' . formata_data_banco_com_hora($data_final) . '</p>';
+                    $html .= '<p align="center" style="font-size: 12px">Relatório de vendas realizadas entre as datas </p>';
+                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . ' - ' . formata_data_banco_sem_hora($data_final) . '</p>';
                 } else {
+                    $html .= '<p align="center" style="font-size: 12px">Relatório de vendas realizadas a partir da data </p>';
                     $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . '</p>';
                 }
 
@@ -99,7 +215,7 @@ class Relatorios extends CI_Controller {
                 $html .= '</tr>';
 
 //                $vendas_venda = $this->vendas_model->get_all_produtos($venda_id);
-//                $valor_final_venda = $this->vendas_model->get_valor_final_venda($venda_id);
+                $valor_final_vendas = $this->vendas_model->gerar_valor_final_relatorio($data_inicial, $data_final);
 
                 foreach ($vendas as $venda):
 
@@ -113,10 +229,10 @@ class Relatorios extends CI_Controller {
 
                 endforeach;
 
-                $html .= '<th colspan="4">';
+                $html .= '<th colspan="3">';
 
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $venda->venda_valor_total . '</td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_vendas->venda_valor_total . '</td>';
 
                 $html .= '</th>';
 
@@ -134,7 +250,7 @@ class Relatorios extends CI_Controller {
 
                     $this->session->set_flashdata('info', 'Não foram encontradas vendas entre as datas ' . formata_data_banco_sem_hora($data_inicial) . '&nbsp;e&nbsp;' . formata_data_banco_sem_hora($data_final));
                 } else {
-                    $this->session->set_flashdata('info', 'Não foram encontradas vendas a partir ' . formata_data_banco_sem_hora($data_inicial));
+                    $this->session->set_flashdata('info', 'Não foram encontradas vendas a partir da data ' . formata_data_banco_sem_hora($data_inicial));
                 }
 
                 redirect('relatorios/vendas');
