@@ -22,19 +22,24 @@ class Relatorios extends CI_Controller {
         $data_inicial = $this->input->post('data_inicial');
 
         $data_final = $this->input->post('data_final');
+        
+        
+//        echo '<pre>';
+//        print_r($this->input->post());
+//        exit();
 
         if ($data_inicial) {
             $this->load->model('vendas_model');
 
-            if ($this->vendas_model->gerar_ralatorio_vendas($data_inicial, $data_final)) {
+            if ($this->vendas_model->gerar_relatorio_vendas($data_inicial, $data_final)) {
 
                 //montar o pdf
 
                 $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-                $vendas = $this->vendas_model->gerar_ralatorio_vendas($data_inicial, $data_final);
+                $vendas = $this->vendas_model->gerar_relatorio_vendas($data_inicial, $data_final);
 
-                $file_name = 'Relatótio de vendas Nº' . $venda->venda_id;
+                $file_name = 'Relatótio de vendas';
 
                 //Inicio do HTML
                 $html = '<html>';
@@ -63,9 +68,9 @@ class Relatorios extends CI_Controller {
                 $html .= '<p style="font-size: 12px">Relatório de vendas realizado no período de </p>';
 
                 if ($data_inicial && $data_final) {
-                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_com_hora($data_inicial) . ' - ' . formata_data_banco_com_hora($data_final) . '</p>';
+                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . ' - ' . formata_data_banco_com_hora($data_final) . '</p>';
                 } else {
-                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_com_hora($data_inicial) . '</p>';
+                    $html .= '<p align="center" style="font-size: 12px">' . formata_data_banco_sem_hora($data_inicial) . '</p>';
                 }
 
 //                $html .= '<p>'
@@ -94,14 +99,13 @@ class Relatorios extends CI_Controller {
                 $html .= '</tr>';
 
 //                $vendas_venda = $this->vendas_model->get_all_produtos($venda_id);
-
 //                $valor_final_venda = $this->vendas_model->get_valor_final_venda($venda_id);
 
                 foreach ($vendas as $venda):
 
                     $html .= '<tr>';
                     $html .= '<td>' . $venda->venda_id . '</td>';
-                    $html .= '<td>' . formata_data_banco_com_hora($vena->venda_data_emissao) . '</td>';
+                    $html .= '<td>' . formata_data_banco_com_hora($venda->venda_data_emissao) . '</td>';
                     $html .= '<td>' . $venda->cliente_nome_completo . '</td>';
                     $html .= '<td>' . $venda->forma_pagamento . '</td>';
                     $html .= '<td>' . 'R$&nbsp;' . $venda->venda_valor_total . '</td>';
@@ -112,7 +116,7 @@ class Relatorios extends CI_Controller {
                 $html .= '<th colspan="4">';
 
                 $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_venda->venda_valor_total . '</td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $venda->venda_valor_total . '</td>';
 
                 $html .= '</th>';
 
@@ -121,14 +125,26 @@ class Relatorios extends CI_Controller {
                 $html .= '</body>';
 
                 $html .= '<html>';
-                
-                  echo '<pre>';
-            print_r($ordem_servico);
-                exit();
+
 
                 $this->pdf->createPDF($html, $file_name, FALSE);
+            } else {
+
+                if (!empty($data_inicial) && !empty($data_final)) {
+
+                    $this->session->set_flashdata('info', 'Não foram encontradas vendas entre as datas ' . formata_data_banco_sem_hora($data_inicial) . '&nbsp;e&nbsp;' . formata_data_banco_sem_hora($data_final));
+                } else {
+                    $this->session->set_flashdata('info', 'Não foram encontradas vendas a partir ' . formata_data_banco_sem_hora($data_inicial));
+                }
+
+                redirect('relatorios/vendas');
             }
         }
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('relatorios/vendas');
+        $this->load->view('layout/footer');
     }
 
+//vendas
 }

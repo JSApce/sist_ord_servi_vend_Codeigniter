@@ -97,7 +97,7 @@ class Vendas_model extends CI_Model {
     }
 
     /* Utilizados no relatŕoio de vendas */
-    public function gerar_realtorio_vendas($data_inicial = NULL, $data_final = NULL) {
+    public function gerar_relatorio_vendas($data_inicial = NULL, $data_final = NULL) {
         $this->db->select([
             'vendas.*',
             'clientes.cliente_id',
@@ -120,7 +120,7 @@ class Vendas_model extends CI_Model {
         return $this->db->get('vendas')->result();
     }
     
-     public function gerar_valor_final_realtorio($data_inicial = NULL, $data_final = NULL) {
+     public function gerar_valor_final_relatorio($data_inicial = NULL, $data_final = NULL) {
         $this->db->select([
             'FORMAT(SUM(REPLACE(venda_valor_total, ",", "")),2) as venda_valor_total',
         ]);
