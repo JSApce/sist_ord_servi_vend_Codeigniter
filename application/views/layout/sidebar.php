@@ -92,7 +92,7 @@
                 <h6 class="collapse-header">Escolha uma opção:</h6>
                 <a title="Gerar relatório de vendas"  class="collapse-item" href="<?php echo base_url('relatorios/vendas'); ?>"><i class="fas fa-shopping-cart text-gray-900"></i>&nbsp;&nbsp;Vendas</a>
                 <a title="Gerar relatório de ordens de serviços"  class="collapse-item" href="<?php echo base_url('relatorios/os'); ?>"><i class="fas fa-shopping-basket text-gray-900"></i>&nbsp;&nbsp;Ordens de serviços</a>
-                <a title="Gerenciar formas de pagamento"  class="collapse-item" href="<?php echo base_url('modulo'); ?>"><i class="fas fa-money-check-alt text-gray-900"></i>&nbsp;&nbsp;Formas de pagamento</a>
+                <a title="Gerenciar elatório de contas a receber"  class="collapse-item" href="<?php echo base_url('relatorios/receber'); ?>"><i class="fas fa-hand-holding-usd text-gray-900"></i>&nbsp;&nbsp;Contas a receber</a>
             </div>
         </div>
     </li>

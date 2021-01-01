@@ -13,7 +13,7 @@ class Relatorios extends CI_Controller {
         }
     }
 
-     public function os() {
+    public function os() {
 
         $data = array(
             'titulo' => 'Relatório de ordens de serviços',
@@ -127,8 +127,7 @@ class Relatorios extends CI_Controller {
         $this->load->view('relatorios/os');
         $this->load->view('layout/footer');
     }
-    
-    
+
     public function vendas() {
 
         $data = array(
@@ -263,4 +262,108 @@ class Relatorios extends CI_Controller {
     }
 
 //vendas
+
+    public function receber() {
+        $data = array(
+            'titulo' => 'Relatório de contas a receber',
+        );
+
+        $contas = $this->input->post('contas');
+
+        if ($contas == 'vencidas' || $contas == 'pagas' || $contas == 'receber') {
+
+            $this->load->model('financeiro_model');
+
+            if ($contas == 'vencidas') {
+
+                $conta_receber_status = 0;
+                $data_vencimento = TRUE;
+
+                //montar o pdf
+
+                $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+
+                $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status, $data_vencimento);
+
+                $file_name = 'Relatótio de contas vencidas';
+
+                //Inicio do HTML
+                $html = '<html>';
+
+                $html .= '<head>';
+                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas vencidas</title>';
+
+                $html .= '</head>';
+
+                $html .= '<body style="font-size:12px">';
+
+                $html .= '<h4 align="center">
+                ' . $empresa->sistema_razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
+                ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
+                ' . 'CEP: ' . $empresa->sistema_cep . ',&nbsp;' . $empresa->sistema_cidade . ',&nbsp;' . $empresa->sistema_estado . '<br/>
+                ' . 'Telefone: ' . $empresa->sistema_telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
+                </h4>';
+
+                $html .= '<hr>';
+
+                $html .= '<table width="100%" border: solid #ddd 1px>';
+
+                $html .= '<tr>';
+
+                $html .= '<th>Conta ID</th>';
+                $html .= '<th>Data venc.</th>';
+                $html .= '<th>Cliente</th>';
+                $html .= '<th>Situação</th>';
+                $html .= '<th>Valor total</th>';
+
+                $html .= '</tr>';
+
+                foreach ($contas as $conta):
+
+                    $html .= '<tr>';
+                    $html .= '<td>' . $conta->conta_receber_id . '</td>';
+                    $html .= '<td>' . formata_data_banco_com_hora($conta->conta_receber_data_vencimento) . '</td>';
+                    $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
+                    $html .= '<td> Vencida </td>';
+                    $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                    $html .= '</tr>';
+
+                endforeach;
+
+                $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status, $data_vencimento);
+
+                $html .= '<th colspan="3">';
+
+                $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+
+                $html .= '</th>';
+
+                $html .= '</table>';
+
+                $html .= '</body>';
+
+                $html .= '<html>';
+
+//                echo('<pre>');
+//                print_r($html);
+//                exit();
+
+                $this->pdf->createPDF($html, $file_name, FALSE);
+            }
+            
+            //pagas
+            
+            
+            
+            //receber
+        }
+
+        $this->load->view('layout/header', $data);
+        $this->load->view('relatorios/receber');
+        $this->load->view('layout/footer');
+    }
+
 }
