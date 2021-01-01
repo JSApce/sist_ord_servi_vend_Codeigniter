@@ -279,25 +279,26 @@ class Relatorios extends CI_Controller {
                 $conta_receber_status = 0;
                 $data_vencimento = TRUE;
 
-                //montar o pdf
+                if ($this->financeiro_model->get_contas_receber_relatorio($conta_receber_status, $data_vencimento)) {
+                    //montar o pdf
 
-                $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+                    $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-                $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status, $data_vencimento);
+                    $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status, $data_vencimento);
 
-                $file_name = 'Relatótio de contas vencidas';
+                    $file_name = 'Relatótio de contas vencidas';
 
-                //Inicio do HTML
-                $html = '<html>';
+                    //Inicio do HTML
+                    $html = '<html>';
 
-                $html .= '<head>';
-                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas vencidas</title>';
+                    $html .= '<head>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas vencidas</title>';
 
-                $html .= '</head>';
+                    $html .= '</head>';
 
-                $html .= '<body style="font-size:12px">';
+                    $html .= '<body style="font-size:12px">';
 
-                $html .= '<h4 align="center">
+                    $html .= '<h4 align="center">
                 ' . $empresa->sistema_razao_social . '<br/>
                 ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
                 ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
@@ -306,59 +307,219 @@ class Relatorios extends CI_Controller {
                 ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
                 </h4>';
 
-                $html .= '<hr>';
+                    $html .= '<hr>';
 
-                $html .= '<table width="100%" border: solid #ddd 1px>';
-
-                $html .= '<tr>';
-
-                $html .= '<th>Conta ID</th>';
-                $html .= '<th>Data venc.</th>';
-                $html .= '<th>Cliente</th>';
-                $html .= '<th>Situação</th>';
-                $html .= '<th>Valor total</th>';
-
-                $html .= '</tr>';
-
-                foreach ($contas as $conta):
+                    $html .= '<table width="100%" border: solid #ddd 1px>';
 
                     $html .= '<tr>';
-                    $html .= '<td>' . $conta->conta_receber_id . '</td>';
-                    $html .= '<td>' . formata_data_banco_com_hora($conta->conta_receber_data_vencimento) . '</td>';
-                    $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
-                    $html .= '<td> Vencida </td>';
-                    $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+
+                    $html .= '<th>Conta ID</th>';
+                    $html .= '<th>Data venc.</th>';
+                    $html .= '<th>Cliente</th>';
+                    $html .= '<th>Situação</th>';
+                    $html .= '<th>Valor total</th>';
+
                     $html .= '</tr>';
 
-                endforeach;
+                    foreach ($contas as $conta):
 
-                $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status, $data_vencimento);
+                        $html .= '<tr>';
+                        $html .= '<td>' . $conta->conta_receber_id . '</td>';
+                        $html .= '<td>' . formata_data_banco_com_hora($conta->conta_receber_data_vencimento) . '</td>';
+                        $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
+                        $html .= '<td> Vencida </td>';
+                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                        $html .= '</tr>';
 
-                $html .= '<th colspan="3">';
+                    endforeach;
 
-                $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status, $data_vencimento);
 
-                $html .= '</th>';
+                    $html .= '<th colspan="3">';
 
-                $html .= '</table>';
+                    $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
 
-                $html .= '</body>';
+                    $html .= '</th>';
 
-                $html .= '<html>';
+                    $html .= '</table>';
+
+                    $html .= '</body>';
+
+                    $html .= '<html>';
 
 //                echo('<pre>');
 //                print_r($html);
 //                exit();
 
-                $this->pdf->createPDF($html, $file_name, FALSE);
+                    $this->pdf->createPDF($html, $file_name, FALSE);
+                } else {
+                    $this->session->set_flashdata('info', 'Não existem contas vencidas na base de dados');
+                    redirect('relatorios/receber');
+                }
             }
-            
+
             //pagas
-            
-            
-            
+            if ($contas == 'pagas') {
+
+                $conta_receber_status = 1;
+
+                if ($this->financeiro_model->get_contas_receber_relatorio($conta_receber_status)) {
+                    //montar o pdf
+
+                    $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+
+                    $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
+
+                    $file_name = 'Relatótio de contas pagas';
+
+                    //Inicio do HTML
+                    $html = '<html>';
+
+                    $html .= '<head>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas pagas</title>';
+
+                    $html .= '</head>';
+
+                    $html .= '<body style="font-size:12px">';
+
+                    $html .= '<h4 align="center">
+                ' . $empresa->sistema_razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
+                ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
+                ' . 'CEP: ' . $empresa->sistema_cep . ',&nbsp;' . $empresa->sistema_cidade . ',&nbsp;' . $empresa->sistema_estado . '<br/>
+                ' . 'Telefone: ' . $empresa->sistema_telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
+                </h4>';
+
+                    $html .= '<hr>';
+
+                    $html .= '<table width="100%" border: solid #ddd 1px>';
+
+                    $html .= '<tr>';
+
+                    $html .= '<th>Conta ID</th>';
+                    $html .= '<th>Data pag.</th>';
+                    $html .= '<th>Cliente</th>';
+                    $html .= '<th>Situação</th>';
+                    $html .= '<th>Valor total</th>';
+
+                    $html .= '</tr>';
+
+                    foreach ($contas as $conta):
+
+                        $html .= '<tr>';
+                        $html .= '<td>' . $conta->conta_receber_id . '</td>';
+                        $html .= '<td>' . formata_data_banco_com_hora($conta->conta_receber_data_pagamento) . '</td>';
+                        $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
+                        $html .= '<td> Paga </td>';
+                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                        $html .= '</tr>';
+
+                    endforeach;
+
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status);
+
+                    $html .= '<th colspan="3">';
+
+                    $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+
+                    $html .= '</th>';
+
+                    $html .= '</table>';
+
+                    $html .= '</body>';
+
+                    $html .= '<html>';
+
+                    $this->pdf->createPDF($html, $file_name, FALSE);
+                } else {
+                    $this->session->set_flashdata('info', 'Não existem contas pagas na base de dados');
+                    redirect('relatorios/receber');
+                }
+            }
+
             //receber
+            if ($contas == 'receber') {
+
+                $conta_receber_status = 0;
+
+                if ($this->financeiro_model->get_contas_receber_relatorio($conta_receber_status)) {
+                    //montar o pdf
+
+                    $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
+
+                    $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
+
+                    $file_name = 'Relatótio de contas a receber';
+
+                    //Inicio do HTML
+                    $html = '<html>';
+
+                    $html .= '<head>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas a receber</title>';
+
+                    $html .= '</head>';
+
+                    $html .= '<body style="font-size:12px">';
+
+                    $html .= '<h4 align="center">
+                ' . $empresa->sistema_razao_social . '<br/>
+                ' . 'CNPJ: ' . $empresa->sistema_cnpj . '<br/>
+                ' . $empresa->sistema_endereco . ',&nbsp;' . $empresa->sistema_numero . '<br/>
+                ' . 'CEP: ' . $empresa->sistema_cep . ',&nbsp;' . $empresa->sistema_cidade . ',&nbsp;' . $empresa->sistema_estado . '<br/>
+                ' . 'Telefone: ' . $empresa->sistema_telefone_fixo . '<br/>
+                ' . 'E-mail: ' . $empresa->sistema_email . '<br/>
+                </h4>';
+
+                    $html .= '<hr>';
+
+                    $html .= '<table width="100%" border: solid #ddd 1px>';
+
+                    $html .= '<tr>';
+
+                    $html .= '<th>Conta ID</th>';
+                    $html .= '<th>Data venc.</th>';
+                    $html .= '<th>Cliente</th>';
+                    $html .= '<th>Situação</th>';
+                    $html .= '<th>Valor total</th>';
+
+                    $html .= '</tr>';
+
+                    foreach ($contas as $conta):
+
+                        $html .= '<tr>';
+                        $html .= '<td>' . $conta->conta_receber_id . '</td>';
+                        $html .= '<td>' . formata_data_banco_sem_hora($conta->conta_receber_data_vencimento) . '</td>';
+                        $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
+                        $html .= '<td> A receber </td>';
+                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                        $html .= '</tr>';
+
+                    endforeach;
+
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status);
+
+                    $html .= '<th colspan="3">';
+
+                    $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
+                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+
+                    $html .= '</th>';
+
+                    $html .= '</table>';
+
+                    $html .= '</body>';
+
+                    $html .= '<html>';
+
+                    $this->pdf->createPDF($html, $file_name, FALSE);
+                } else {
+                    $this->session->set_flashdata('info', 'Não existem contas a receber na base de dados');
+                    redirect('relatorios/receber');
+                }
+            }
         }
 
         $this->load->view('layout/header', $data);
