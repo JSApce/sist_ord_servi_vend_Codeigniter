@@ -624,16 +624,17 @@ class Relatorios extends CI_Controller {
             }
 
             //pagas
-            if ($contas == 'pagas') {
+             if ($contas == 'pagas') {
 
-                $conta_receber_status = 1;
+                $conta_pagar_status = 1;
+                $data_vencimento = FALSE;
 
-                if ($this->financeiro_model->get_contas_receber_relatorio($conta_receber_status)) {
+                if ($this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento)) {
                     //montar o pdf
 
                     $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-                    $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
+                    $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
                     $file_name = 'Relatótio de contas pagas';
 
@@ -664,7 +665,7 @@ class Relatorios extends CI_Controller {
 
                     $html .= '<th>Conta ID</th>';
                     $html .= '<th>Data pag.</th>';
-                    $html .= '<th>Cliente</th>';
+                    $html .= '<th>Fornecedor</th>';
                     $html .= '<th>Situação</th>';
                     $html .= '<th>Valor total</th>';
 
@@ -673,21 +674,21 @@ class Relatorios extends CI_Controller {
                     foreach ($contas as $conta):
 
                         $html .= '<tr>';
-                        $html .= '<td>' . $conta->conta_receber_id . '</td>';
-                        $html .= '<td>' . formata_data_banco_com_hora($conta->conta_receber_data_pagamento) . '</td>';
-                        $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
+                        $html .= '<td>' . $conta->conta_pagar_id . '</td>';
+                        $html .= '<td>' . formata_data_banco_com_hora($conta->conta_pagar_data_pagamento) . '</td>';
+                        $html .= '<td>' . $conta->fornecedor_nome_fantasia . '</td>';
                         $html .= '<td> Paga </td>';
-                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_pagar_valor . '</td>';
                         $html .= '</tr>';
 
                     endforeach;
 
-                    $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status);
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
                     $html .= '<th colspan="3">';
 
                     $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_pagar_valor_total . '</td>';
 
                     $html .= '</th>';
 
@@ -700,29 +701,30 @@ class Relatorios extends CI_Controller {
                     $this->pdf->createPDF($html, $file_name, FALSE);
                 } else {
                     $this->session->set_flashdata('info', 'Não existem contas pagas na base de dados');
-                    redirect('relatorios/receber');
+                    redirect('relatorios/pagar');
                 }
             }
+            
+            //a pagar
+            if ($contas == 'a_pagar') {
 
-            //receber
-            if ($contas == 'receber') {
+                $conta_pagar_status = 0;
+//                $data_vencimento = FALSE;
 
-                $conta_receber_status = 0;
-
-                if ($this->financeiro_model->get_contas_receber_relatorio($conta_receber_status)) {
+                if ($this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status)) {
                     //montar o pdf
 
                     $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-                    $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
+                    $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status);
 
-                    $file_name = 'Relatótio de contas a receber';
+                    $file_name = 'Relatótio de contas a pagar';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas a receber</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas a pagar</title>';
 
                     $html .= '</head>';
 
@@ -745,7 +747,7 @@ class Relatorios extends CI_Controller {
 
                     $html .= '<th>Conta ID</th>';
                     $html .= '<th>Data venc.</th>';
-                    $html .= '<th>Cliente</th>';
+                    $html .= '<th>Fornecedor</th>';
                     $html .= '<th>Situação</th>';
                     $html .= '<th>Valor total</th>';
 
@@ -754,21 +756,21 @@ class Relatorios extends CI_Controller {
                     foreach ($contas as $conta):
 
                         $html .= '<tr>';
-                        $html .= '<td>' . $conta->conta_receber_id . '</td>';
-                        $html .= '<td>' . formata_data_banco_sem_hora($conta->conta_receber_data_vencimento) . '</td>';
-                        $html .= '<td>' . $conta->cliente_nome_completo . '</td>';
-                        $html .= '<td> A receber </td>';
-                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_receber_valor . '</td>';
+                        $html .= '<td>' . $conta->conta_pagar_id . '</td>';
+                        $html .= '<td>' . formata_data_banco_sem_hora($conta->conta_pagar_data_vencimento) . '</td>';
+                        $html .= '<td>' . $conta->fornecedor_nome_fantasia . '</td>';
+                        $html .= '<td> A pagar </td>';
+                        $html .= '<td>' . 'R$&nbsp;' . $conta->conta_pagar_valor . '</td>';
                         $html .= '</tr>';
 
                     endforeach;
 
-                    $valor_final_contas = $this->financeiro_model->get_sum_contas_receber_relatorio($conta_receber_status);
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_pagar_relatorio($conta_pagar_status);
 
                     $html .= '<th colspan="3">';
 
                     $html .= '<td style="border-top: solid #ddd 1px"><strong>Valor final</strong></td>';
-                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_receber_valor_total . '</td>';
+                    $html .= '<td style="border-top: solid #ddd 1px">' . 'R$&nbsp;' . $valor_final_contas->conta_pagar_valor_total . '</td>';
 
                     $html .= '</th>';
 
@@ -780,14 +782,14 @@ class Relatorios extends CI_Controller {
 
                     $this->pdf->createPDF($html, $file_name, FALSE);
                 } else {
-                    $this->session->set_flashdata('info', 'Não existem contas a receber na base de dados');
-                    redirect('relatorios/receber');
+                    $this->session->set_flashdata('info', 'Não existem contas a apgar na base de dados');
+                    redirect('relatorios/pagar');
                 }
             }
         }
 
         $this->load->view('layout/header', $data);
-        $this->load->view('relatorios/receber');
+        $this->load->view('relatorios/pagar');
         $this->load->view('layout/footer');
     }
 }
