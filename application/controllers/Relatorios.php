@@ -709,14 +709,14 @@ class Relatorios extends CI_Controller {
             if ($contas == 'a_pagar') {
 
                 $conta_pagar_status = 0;
-//                $data_vencimento = FALSE;
+                $data_vencimento = FALSE;
 
-                if ($this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status)) {
+                if ($this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento)) {
                     //montar o pdf
 
                     $empresa = $this->core_model->get_by_id('sistema', array('sistema_id' => 1));
 
-                    $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status);
+                    $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
                     $file_name = 'Relatótio de contas a pagar';
 
@@ -765,7 +765,7 @@ class Relatorios extends CI_Controller {
 
                     endforeach;
 
-                    $valor_final_contas = $this->financeiro_model->get_sum_contas_pagar_relatorio($conta_pagar_status);
+                    $valor_final_contas = $this->financeiro_model->get_sum_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
                     $html .= '<th colspan="3">';
 

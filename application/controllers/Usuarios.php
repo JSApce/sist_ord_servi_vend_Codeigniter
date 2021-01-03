@@ -13,6 +13,14 @@ class Usuarios extends CI_Controller {
     }
 
     public function index() {
+
+        if (!$this->ion_auth->is_admin()) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
+            redirect('home');
+        }
+
+
         $data = array(
             'titulo' => 'Usuários cadastrados',
             'styles' => array('vendor/datatables/dataTables.bootstrap4.min.css',),
@@ -29,6 +37,12 @@ class Usuarios extends CI_Controller {
     }
 
     public function add() {
+
+        if (!$this->ion_auth->is_admin()) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
+            redirect('home');
+        }
 
         $this->form_validation->set_rules('first_name', '', 'trim|required|min_length[2]|max_length[50]');
         $this->form_validation->set_rules('last_name', '', 'trim|required|min_length[2]|max_length[50]');
@@ -76,6 +90,13 @@ class Usuarios extends CI_Controller {
     }
 
     public function del($usuario_id = NULL) {
+
+        if (!$this->ion_auth->is_admin()) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
+            redirect('home');
+        }
+
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');
             redirect('usuarios');
@@ -95,6 +116,12 @@ class Usuarios extends CI_Controller {
     }
 
     public function edit($usuario_id = NULL) {
+        
+         if ($this->session->userdata('user_id') != $usuario_id) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para editar outro Usuário');
+            redirect('home');
+        }
 
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
             $this->session->set_flashdata('error', 'Usuário não encontrado');
@@ -145,7 +172,12 @@ class Usuarios extends CI_Controller {
                 } else {
                     $this->session->set_flashdata('error', 'Erro ao salvar os dados');
                 }
-                redirect('usuarios');
+
+                if ($this->ion_auth->is_admin()) {
+                    redirect('usuarios');
+                } else {
+                    redirect('home');
+                }
             } else {
                 $data = array(
                     'titulo' => 'Editar usuário',

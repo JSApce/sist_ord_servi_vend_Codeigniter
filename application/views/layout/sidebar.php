@@ -100,6 +100,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
+    <?php if($this->ion_auth->is_admin()): ?>
     <!-- Heading -->
     <div class="sidebar-heading">
         Configurações
@@ -122,6 +123,8 @@
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
+    <?php endif; ?>
+    
     <!-- Sidebar Toggler (Sidebar) -->
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
