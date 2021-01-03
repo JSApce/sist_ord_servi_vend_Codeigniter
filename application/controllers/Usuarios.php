@@ -17,7 +17,7 @@ class Usuarios extends CI_Controller {
         if (!$this->ion_auth->is_admin()) {
 
             $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
-            redirect('home');
+            redirect('/');
         }
 
 
@@ -41,7 +41,7 @@ class Usuarios extends CI_Controller {
         if (!$this->ion_auth->is_admin()) {
 
             $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
-            redirect('home');
+            redirect('/');
         }
 
         $this->form_validation->set_rules('first_name', '', 'trim|required|min_length[2]|max_length[50]');
@@ -94,7 +94,7 @@ class Usuarios extends CI_Controller {
         if (!$this->ion_auth->is_admin()) {
 
             $this->session->set_flashdata('info', 'Você não tem permissão para acessar menu Usuários');
-            redirect('home');
+            redirect('/');
         }
 
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
@@ -116,11 +116,12 @@ class Usuarios extends CI_Controller {
     }
 
     public function edit($usuario_id = NULL) {
-        
-         if ($this->session->userdata('user_id') != $usuario_id) {
+
+        //verifica se não for admin e tentar editar usuario diferente do seu
+        if (!$this->ion_auth->is_admin() && $this->session->userdata('user_id') != $usuario_id) {
 
             $this->session->set_flashdata('info', 'Você não tem permissão para editar outro Usuário');
-            redirect('home');
+            redirect('/');
         }
 
         if (!$usuario_id || !$this->ion_auth->user($usuario_id)->row()) {
@@ -149,6 +150,11 @@ class Usuarios extends CI_Controller {
                         ), $this->input->post()
                 );
 
+                if (!$this->ion_auth->is_admin()) {
+                    unset($data['active']);
+                }
+
+
                 $data = html_escape($data);
 
                 /* Verifica se foi passado o password */
@@ -163,9 +169,12 @@ class Usuarios extends CI_Controller {
                     $perfil_usuario_db = $this->ion_auth->get_users_groups($usuario_id)->row();
                     $perfil_usuario_post = $this->input->post('perfil_usuario');
 
-                    if ($perfil_usuario_post != $perfil_usuario_db->id) {
-                        $this->ion_auth->remove_from_group($perfil_usuario_db->id, $usuario_id);
-                        $this->ion_auth->add_to_group($perfil_usuario_post, $usuario_id);
+                    if ($this->ion_auth->is_admin()) {
+
+                        if ($perfil_usuario_post != $perfil_usuario_db->id) {
+                            $this->ion_auth->remove_from_group($perfil_usuario_db->id, $usuario_id);
+                            $this->ion_auth->add_to_group($perfil_usuario_post, $usuario_id);
+                        }
                     }
 
                     $this->session->set_flashdata('success', 'Dados salvos com sucesso');

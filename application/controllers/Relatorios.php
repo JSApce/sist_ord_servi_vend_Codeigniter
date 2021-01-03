@@ -11,6 +11,12 @@ class Relatorios extends CI_Controller {
             $this->session->set_flashdata('info', 'Sua sessão expirou!');
             redirect('login');
         }
+
+        if (!$this->ion_auth->is_admin()) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar esse menu');
+            redirect('/');
+        }
     }
 
     public function os() {
@@ -527,7 +533,7 @@ class Relatorios extends CI_Controller {
         $this->load->view('layout/footer');
     }
 
-     public function pagar() {
+    public function pagar() {
         $data = array(
             'titulo' => 'Relatório de contas a pagar',
         );
@@ -624,7 +630,7 @@ class Relatorios extends CI_Controller {
             }
 
             //pagas
-             if ($contas == 'pagas') {
+            if ($contas == 'pagas') {
 
                 $conta_pagar_status = 1;
                 $data_vencimento = FALSE;
@@ -704,7 +710,7 @@ class Relatorios extends CI_Controller {
                     redirect('relatorios/pagar');
                 }
             }
-            
+
             //a pagar
             if ($contas == 'a_pagar') {
 
@@ -792,4 +798,5 @@ class Relatorios extends CI_Controller {
         $this->load->view('relatorios/pagar');
         $this->load->view('layout/footer');
     }
+
 }

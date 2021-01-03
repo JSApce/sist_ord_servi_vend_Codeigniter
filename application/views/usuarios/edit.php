@@ -49,14 +49,14 @@
                         </div>
                         <div class="col-md-4">
                             <label >Ativo</label>
-                            <select class="form-control custom-select" name="active">
+                            <select class="form-control custom-select" name="active" <?php echo(!$this->ion_auth->is_admin() ? 'disabled' : '') ?> >
                                 <option value="0" <?php echo ($usuario->active == 0) ? 'selected' : '' ?>>Não</option>
                                 <option value="1" <?php echo ($usuario->active == 1) ? 'selected' : '' ?>>Sim</option>
                             </select>
                         </div>
                         <div class="col-md-4">
                             <label >Perfil de acesso</label>
-                            <select class="form-control custom-select" name="perfil_usuario">
+                            <select class="form-control custom-select" name="perfil_usuario" <?php echo(!$this->ion_auth->is_admin() ? 'disabled' : '') ?>>
                                 <option value="2" <?php echo ($perfil_usuario->id == 2) ? 'selected' : '' ?>>Vendedor</option>
                                 <option value="1" <?php echo ($perfil_usuario->id == 1) ? 'selected' : '' ?>>Administrador</option>
                             </select>

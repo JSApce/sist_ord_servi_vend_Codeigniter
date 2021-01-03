@@ -2,16 +2,20 @@
 
 defined('BASEPATH') or exit('Ação não permitida!');
 
-class Sistema extends CI_Controller
-{
+class Sistema extends CI_Controller {
 
-    public function __construct()
-    {
+    public function __construct() {
         parent::__construct();
 
         if (!$this->ion_auth->logged_in()) {
             $this->session->set_flashdata('info', 'Sua sessão expirou!');
             redirect('login');
+        }
+
+        if (!$this->ion_auth->is_admin()) {
+
+            $this->session->set_flashdata('info', 'Você não tem permissão para acessar esse menu');
+            redirect('/');
         }
     }
 
@@ -43,23 +47,23 @@ class Sistema extends CI_Controller
         if ($this->form_validation->run()) {
 
             $data = elements(
-                array(
-                    'sistema_razao_social',
-                    'sistema_nome_fantasia',
-                    'sistema_cnpj',
-                    'sistema_ie',
-                    'sistema_telefone_fixo',
-                    'sistema_telefone_movel',
-                    'sistema_site_url',
-                    'sistema_email',
-                    'sistema_cep',
-                    'sistema_endereco',
-                    'sistema_numero',
-                    'sistema_cidade',
-                    'sistema_estado',
-                    'sistema_txt_ordem_servico'
-                ),
-                $this->input->post()
+                    array(
+                        'sistema_razao_social',
+                        'sistema_nome_fantasia',
+                        'sistema_cnpj',
+                        'sistema_ie',
+                        'sistema_telefone_fixo',
+                        'sistema_telefone_movel',
+                        'sistema_site_url',
+                        'sistema_email',
+                        'sistema_cep',
+                        'sistema_endereco',
+                        'sistema_numero',
+                        'sistema_cidade',
+                        'sistema_estado',
+                        'sistema_txt_ordem_servico'
+                    ),
+                    $this->input->post()
             );
 
             $data = html_escape($data);
@@ -72,4 +76,5 @@ class Sistema extends CI_Controller
             $this->load->view('layout/footer');
         }
     }
+
 }
