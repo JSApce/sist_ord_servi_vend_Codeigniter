@@ -66,7 +66,7 @@ class Ajax extends CI_Controller {
 
                     $data['message'][] = array(
                         'id' => $row->servico_id,
-                        'value' => $row->servico_descricao,
+                        'value' => $row->servico_nome,
                         'servico_preco' => $row->servico_preco,
                     );
                 }

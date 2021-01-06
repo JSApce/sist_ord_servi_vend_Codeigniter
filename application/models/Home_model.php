@@ -114,7 +114,7 @@ class Home_model extends CI_Model {
         
         $this->db->where('active', 0);
         
-        $this->db->get('users')->row();
+        return $this->db->get('users')->row();
         
     }
     
