@@ -21,6 +21,9 @@ class Home extends CI_Controller {
             'titulo' => 'Home',
             
             'soma_vendas' => $this->home_model->get_sum_vendas(),
+            'soma_ordem_servicos' => $this->home_model->get_sum_ordem_servico(),
+            'total_pagar' => $this->home_model->get_sum_pagar(),
+            'total_receber' => $this->home_model->get_sum_receber(),
         );
         
         $this->load->view('layout/header', $data);
