@@ -123,6 +123,40 @@
            
         </div>
 
+         <!-- Content Row -->
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-success">Top 3 produtos mais vendidos</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 25rem;" src="<?php echo base_url('public/img/produtos_vendidos.svg'); ?>" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            
+             <div class="col-lg-6 mb-4">
+
+                <!-- Illustrations -->
+                <div class="card shadow mb-4">
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary">Top 3 serviços mais vendidos</h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center">
+                            <img class="img-fluid px-3 px-sm-4 mt-3 mb-4" style="width: 14rem;" src="<?php echo base_url('public/img/servicos_vendidos.svg'); ?>" alt="">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
         <!-- Content Row -->
 
         <div class="row">
