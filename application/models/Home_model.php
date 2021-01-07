@@ -53,7 +53,7 @@ class Home_model extends CI_Model {
 
         $this->db->join('fornecedores', 'fornecedor_id = conta_pagar_fornecedor_id', 'LEFT');
 
-        return $this->db->get('contas_pagar')->result();
+        return $this->db->get('contas_pagar')->row();
     }
 
     public function get_contas_receber_vencem_hoje() {
@@ -69,7 +69,7 @@ class Home_model extends CI_Model {
 
         $this->db->join('clientes', 'cliente_id = conta_receber_cliente_id', 'LEFT');
 
-        return $this->db->get('contas_receber')->result();
+        return $this->db->get('contas_receber')->row();
     }
     
     public function get_produtos_mais_vendidos() {
