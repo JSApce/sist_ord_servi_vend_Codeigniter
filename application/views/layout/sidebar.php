@@ -4,9 +4,10 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="<?php echo base_url('/'); ?>">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-swimmer"></i>
+            <!--<i class="fas fa-ruler-combined"></i>-->
+            <i class="fas fa-project-diagram"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Natação</div>
+        <div class="sidebar-brand-text mx-3">JS Sistemas</div>
     </a>
 
     <!-- Divider -->
@@ -19,7 +20,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed text-uppercase font-weight-bold" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-shopping-cart"></i>
             <span>Vendas</span>
         </a>
@@ -34,7 +35,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed text-uppercase font-weight-bold" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-database"></i>
             <span>Cadastros</span>
         </a>
@@ -51,7 +52,7 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+        <a class="nav-link collapsed text-uppercase font-weight-bold" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
             <i class="fas fa-box-open"></i>
             <span>Estoques</span>
         </a>
@@ -68,7 +69,7 @@
     <?php if ($this->ion_auth->is_admin()): ?>
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
+            <a class="nav-link collapsed text-uppercase font-weight-bold" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
                 <i class="fas fa-wallet"></i>
                 <span>Financeiro</span>
             </a>
@@ -84,7 +85,7 @@
 
         <!-- Nav Item - Pages Collapse Menu -->
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+            <a class="nav-link collapsed text-uppercase font-weight-bold" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
                 <i class="fas fa-search"></i>
                 <span>Relatórios</span>
             </a>
@@ -109,14 +110,14 @@
 
         <!-- Nav Item-->
         <li class="nav-item">
-            <a title="Gerenciar usuários" class="nav-link" href="<?php echo base_url('usuarios'); ?>">
+            <a title="Gerenciar usuários" class="nav-link text-uppercase font-weight-bold" href="<?php echo base_url('usuarios'); ?>">
                 <i class="fas fa-users"></i>
                 <span>Usuários</span></a>
         </li>
 
         <!-- Nav Item-->
         <li class="nav-item">
-            <a title="Gerenciar dados do sistema" class="nav-link" href="<?php echo base_url('sistema'); ?>">
+            <a title="Gerenciar dados do sistema" class="nav-link text-uppercase font-weight-bold" href="<?php echo base_url('sistema'); ?>">
                 <i class="fas fa-cogs"></i>
                 <span>Sistema</span></a>
         </li>
