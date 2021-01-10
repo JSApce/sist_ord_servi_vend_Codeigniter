@@ -39,13 +39,13 @@ class Relatorios extends CI_Controller {
 
                 $ordens_servicos = $this->ordem_servicos_model->gerar_relatorio_os($data_inicial, $data_final);
 
-                $file_name = 'Relatótio de ordens de serviços';
+                $file_name = 'Relatório de ordens de serviços';
 
                 //Inicio do HTML
                 $html = '<html>';
 
                 $html .= '<head>';
-                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de ordens de serviços</title>';
+                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de ordens de serviços</title>';
 
                 $html .= '</head>';
 
@@ -160,13 +160,13 @@ class Relatorios extends CI_Controller {
 
                 $vendas = $this->vendas_model->gerar_relatorio_vendas($data_inicial, $data_final);
 
-                $file_name = 'Relatótio de vendas';
+                $file_name = 'Relatório de vendas';
 
                 //Inicio do HTML
                 $html = '<html>';
 
                 $html .= '<head>';
-                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de vendas</title>';
+                $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de vendas</title>';
 
                 $html .= '</head>';
 
@@ -292,13 +292,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status, $data_vencimento);
 
-                    $file_name = 'Relatótio de contas vencidas';
+                    $file_name = 'Relatório de contas vencidas';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas vencidas</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas vencidas</title>';
 
                     $html .= '</head>';
 
@@ -377,13 +377,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
 
-                    $file_name = 'Relatótio de contas pagas';
+                    $file_name = 'Relatório de contas pagas';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas pagas</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas pagas</title>';
 
                     $html .= '</head>';
 
@@ -458,13 +458,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_receber_relatorio($conta_receber_status);
 
-                    $file_name = 'Relatótio de contas a receber';
+                    $file_name = 'Relatório de contas a receber';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas a receber</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas a receber</title>';
 
                     $html .= '</head>';
 
@@ -556,13 +556,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
-                    $file_name = 'Relatótio de contas vencidas';
+                    $file_name = 'Relatório de contas vencidas';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas vencidas</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas vencidas</title>';
 
                     $html .= '</head>';
 
@@ -642,13 +642,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
-                    $file_name = 'Relatótio de contas pagas';
+                    $file_name = 'Relatório de contas pagas';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas pagas</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas pagas</title>';
 
                     $html .= '</head>';
 
@@ -724,13 +724,13 @@ class Relatorios extends CI_Controller {
 
                     $contas = $this->financeiro_model->get_contas_pagar_relatorio($conta_pagar_status, $data_vencimento);
 
-                    $file_name = 'Relatótio de contas a pagar';
+                    $file_name = 'Relatório de contas a pagar';
 
                     //Inicio do HTML
                     $html = '<html>';
 
                     $html .= '<head>';
-                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatótio de contas a pagar</title>';
+                    $html .= '<title>' . $empresa->sistema_nome_fantasia . ' | Relatório de contas a pagar</title>';
 
                     $html .= '</head>';
 

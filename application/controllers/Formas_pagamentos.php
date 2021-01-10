@@ -39,7 +39,7 @@ class Formas_pagamentos extends CI_Controller {
                 'forma_pagamento_nome',
                 'forma_pagamento_ativa',
                 'forma_pagamento_aceita_parc',
-                    ), $this->input->post(),);
+                    ), $this->input->post());
 
             $data = html_escape($data);
 
@@ -90,7 +90,7 @@ class Formas_pagamentos extends CI_Controller {
                     'forma_pagamento_nome',
                     'forma_pagamento_ativa',
                     'forma_pagamento_aceita_parc',
-                        ), $this->input->post(),);
+                        ), $this->input->post());
 
                 $data = html_escape($data);
 

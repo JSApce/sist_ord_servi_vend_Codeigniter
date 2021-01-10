@@ -73,11 +73,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+
 $db['default'] = array(
 	'dsn'	=> '',
 	'hostname' => 'localhost',
-	'username' => 'root',
-	'password' => '',
+	'username' => 'tedrfs',
+	'password' => 'treeee456@#',
 	'database' => 'db_bcit',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
@@ -90,7 +91,8 @@ $db['default'] = array(
 	'swap_pre' => '',
 	'encrypt' => FALSE,
 	'compress' => FALSE,
-	'stricton' => FALSE,
+	'stricton' => TRUE, //TRUE -> PARA HOSPEDAGEM
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
